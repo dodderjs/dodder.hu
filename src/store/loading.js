@@ -1,4 +1,4 @@
-const INITIAL_STATE = false;
+export const INITIAL_STATE = false;
 
 const loading = (type) => (state = INITIAL_STATE, action) => {
 	switch(action.type) {
