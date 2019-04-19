@@ -1,0 +1,114 @@
+@import './scss-variables/breakpoints.scss';
+
+@media only screen and (max-width: ($breakpoint-s - 1)) {
+	.movie-list > li {
+		width: 50%;
+	}
+
+	.movie-list li:nth-child(even) {
+		.movie-details {
+			right: -10px;
+			left: auto;
+			padding: 10px calc(100% + 20px) 10px 10px;
+		}
+	}
+}
+
+@media only screen and (min-width: $breakpoint-s) and (max-width: ($breakpoint-sm - 1))
+{
+	.movie-list > li {
+		width: 33.3%;
+	}
+	.movie-list li:nth-child(3n+0) {
+		.movie-details {
+			right: -10px;
+			left: auto;
+			padding: 10px calc(100% + 20px) 10px 10px;
+		}
+	}
+}
+
+@media only screen and (min-width: $breakpoint-sm) and (max-width: ($breakpoint-m - 1))
+{
+	.movie-list > li {
+		width: 25%;
+	}
+	.movie-list li:nth-child(4n+3),
+	.movie-list li:nth-child(4n+0) {
+		.movie-details {
+			right: -10px;
+			left: auto;
+			padding: 10px calc(100% + 20px) 10px 10px;
+		}
+	}
+}
+@media only screen and (min-width: $breakpoint-m) and (max-width: ($breakpoint-l - 1))
+{
+	.movie-list > li {
+		width: 20%;
+	}
+	.movie-list li:nth-child(5n+4),
+	.movie-list li:nth-child(5n+0) {
+		.movie-details {
+			right: -10px;
+			left: auto;
+			padding: 10px calc(100% + 20px) 10px 10px;
+		}
+	}
+}
+
+@media only screen and (min-width: $breakpoint-l) and (max-width: ($breakpoint-xl - 1))
+{
+	.movie-list > li {
+		width: 16.6%;
+	}
+	.movie-list li:nth-child(6n+5),
+	.movie-list li:nth-child(6n+0) {
+		.movie-details {
+			right: -10px;
+			left: auto;
+			padding: 10px calc(100% + 20px) 10px 10px;
+		}
+	}
+}
+
+@media only screen and (min-width: $breakpoint-xl)
+{
+	.movie-list > li {
+		width: 12.5%;
+	}
+	.movie-list li:nth-child(8n+7),
+	.movie-list li:nth-child(8n+0) {
+		.movie-details {
+			right: -10px;
+			left: auto;
+			padding: 10px calc(100% + 20px) 10px 10px;
+		}
+	}
+}
+
+@media only screen and (max-width: $breakpoint-xs) {
+	.navigation .navItem a {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+
+
+@media only screen and (max-width: $breakpoint-spec) {
+	 #MovieDetails .movieDetails {
+		padding: 10px;
+	}
+	#MovieDetails .movieDetails .movie-images {
+		width: 15rem;
+	}
+	#MovieDetails .movie-info {
+		margin-left: 16rem;
+		font-size: 1.2rem;
+	}
+}
+
+@viewport{
+	zoom: 1.0;
+/*	width: device-width;*/
+}

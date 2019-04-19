@@ -1,0 +1,80 @@
+@import './scss-variables/colors.scss';
+
+#Menu {
+	display: block;
+	position: sticky;
+	left: 0;
+	top: 0;
+	right: 0;
+	background-color: $navigation-bg; /*rgba(247, 248, 249, 0.95);*/
+	z-index: 700;
+	height: 82px;
+	min-width: 320px;
+	box-shadow: 1px 0 3px rgba(0, 0, 0, 0.56);
+}
+.navigation {
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	line-height: 17px;
+
+	.navItem,
+	.submenu li {
+		display: inline-block;
+		padding: 0 5px;
+		vertical-align: top;
+	}
+
+}
+
+.navItem {
+	a,
+	span {
+		color: $navigation-link;
+		text-decoration: none;
+		padding: 12px 20px 0;
+		height: 29px;
+		font-size: 1.2rem;
+		display: inline-block;
+		font-weight: 600;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
+
+	a .navItem-filter {
+		display: block;
+		font-weight: normal;
+		font-size: .8rem;
+		line-height: .8rem;
+		text-transform: none;
+		color: $navigation-link;
+		white-space: nowrap;
+	}
+
+	a:hover,
+	.submenu a:hover,
+	&:hover > a,
+	&:hover > span {
+		color: $navigation-hover;
+		font-weight: 700;
+	}
+
+	a.active,
+	.active > span,
+	.submenu li > a.active {
+		color: $navigation-active;
+		font-weight: 700;
+	}
+
+	.submenu {
+		position: absolute;
+		display: none;
+		background-color: $navigation-sub-bg;
+		left: 0;
+		right: 0;
+	}
+
+	a.active + .submenu {
+		display: block;
+	}
+}

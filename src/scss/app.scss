@@ -1,0 +1,39 @@
+#App {
+	/*padding: 41px 0 0;*/
+	background-color: #1a2127;
+	height: 1px;
+	min-height: 100%;
+	max-width: 1250px;
+	margin: 0 auto;
+	box-sizing: border-box;
+	position: relative;
+}
+
+#Content {
+	position: relative;
+	min-height: 100%;
+	height: 1px;
+}
+
+.more {
+	color: #2D3A44;
+	text-transform: uppercase;
+	padding: 15px 10px;
+	text-align: center;
+	display: block;
+	/* border: 1px solid #ccc; */
+	margin: 10px;
+	cursor: pointer;
+	font-size: 1.5rem;
+	font-weight: bold;
+	cursor: pointer;
+	clear: both;
+}
+
+@import './icons';
+@import './buttons';
+@import './movielist';
+@import './movie_details';
+@import './navigation';
+@import './login';
+@import './spinner';

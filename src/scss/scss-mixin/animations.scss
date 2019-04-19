@@ -1,0 +1,42 @@
+@mixin _animation ($anim, $time, $until, $bezier) {
+	-moz-animation: $anim $time $until $bezier;
+	-webkit-animation: $anim $time $until $bezier;
+	animation: $anim $time $until $bezier;
+}
+@mixin _animation-timing-function ($bezier) {
+  -moz-animation-timing-function: $bezier;
+  -webkit-animation-timing-function: $bezier;
+  animation-timing-function: $bezier;
+}
+
+@mixin _transform-origin ($x, $y, $z) {
+	-moz-transform-origin: $x $y $z;
+	-webkit-transform-origin: $x $y $z;
+	transform-origin: $x $y $z;
+}
+@mixin _transform ($param) {
+	-moz-transform: $param;
+    -ms-transform: $param;
+    -webkit-transform: $param;
+    transform: $param;
+}
+
+@mixin _transform-keyframes($name, $transform) {
+	@-moz-keyframes #{$name} {
+	  to {
+		-moz-transform: $transform;
+		transform: $transform;
+	  }
+	}
+	@-webkit-keyframes #{$name} {
+	  to {
+	    -webkit-transform: $transform;
+	    transform: $transform;
+	  }
+	}
+	@keyframes #{$name} {
+	  to {
+	    @include _transform($transform);
+	  }
+	}
+}

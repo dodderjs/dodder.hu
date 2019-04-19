@@ -1,0 +1,153 @@
+@import './scss-variables/colors.scss';
+
+.movie-details-view {
+	z-index: 1000;
+	background-color: $details-bg;
+	min-height: 100%;
+	box-sizing: border-box;
+}
+
+.details {
+	padding: 2rem;
+	background-color: $details-upper-bg;
+}
+
+.details__close {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	width: 2rem;
+	height: 2rem;
+	display: block;
+}
+
+.details__title {
+	margin-bottom: 1rem;
+
+	h2 {
+		margin: 0;
+		font-weight: 400;
+		font-size: 3rem;
+		display: inline-block;
+
+		a {
+			color: $details-bg;
+		}
+	}
+	.details__pg,
+	.details__runtime {
+		font-size: 1.2rem;
+		margin-left: 0.5rem;
+	}
+	.details__pg {
+		padding: 0 2px;
+		margin-top: 1.3rem;
+		border-radius: 3px;
+		display: inline-block;
+		vertical-align: top;
+		color: $not-important-dark;
+		border: 1px solid $not-important-dark;
+		text-transform: uppercase;
+	}
+
+	.details__runtime {
+		vertical-align: top;
+		color: $not-important-dark;
+		margin-top: 1.7rem;
+		display: inline-block;
+	}
+}
+.details__images,
+.details__buttons,
+.details__info {
+	float: left;
+	box-sizing: border-box;
+}
+.details__images {
+	width: 30%;
+
+	.movie-posters > a {
+		display: block;
+	}
+	.movie-posters img.movie-poster {
+		width: 100%;
+	}
+	/* NO IMAGE */
+	&.no_poster {
+		.movie-poster {
+			width: 100%;
+			position: relative;
+			display: block;
+			min-height: 27rem;
+		}
+
+		.material-icons {
+			font-size: 8rem;
+			display: block;
+			margin-top: 5.8rem;
+			color: $not-image-text;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -4rem 0 0 -4rem;
+		}
+	}
+}
+
+.details__images__list {
+	margin: 1rem -.2rem;
+
+	li {
+		float: left;
+		height: 10rem;
+		padding: .4rem;
+	}
+	img {
+		height: 100%;
+	}
+}
+
+.details__info {
+	width: 60%;
+	padding-left: 2rem;
+	padding-right: 2rem;
+
+	a {
+		font-weight: bold;
+	}
+}
+.details__buttons {
+	width: 10%;
+}
+
+.details__images__list {
+	margin: 1rem -.2rem;
+
+	li {
+		float: left;
+		height: 10rem;
+		padding: .4rem;
+	}
+
+	img {
+		height: 100%;
+	}
+
+}
+.details__torrents {
+	color: $text-dark;
+}
+table {
+	width: 100%;
+	text-align: center;
+	margin-top: 10px;
+}
+
+#Torrents {
+	clear: both;
+	margin-top: 2em;
+
+	.extended {
+		background-color: rgba(5, 140, 197, 0.39);
+	}
+}

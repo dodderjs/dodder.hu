@@ -1,0 +1,49 @@
+@import './scss-variables/colors';
+@import './scss-variables/breakpoints';
+
+.login-form {
+	display: block;
+	margin: 0 24px;
+	background: $base;
+	padding: 20px;
+	align-items: center;
+	flex-direction: column;
+	border-radius: 4px;
+	color: $text-dark;
+	top: 64px;
+	position: relative;
+
+	.login-form-title {
+		text-align: center;
+		
+		h1 {
+			font-weight: normal;
+			letter-spacing: 0;
+		}
+	}
+	.login-form-title__icon {
+		width: 40px;
+		height: 40px;
+		overflow: hidden;
+		font-size: 1.25rem;
+		align-items: center;
+		user-select: none;
+		border-radius: 50%;
+		padding: 1rem;
+		color: $base;
+		background-color: $app-bg;
+	}
+	.login-form-field,
+	.login-form-button {
+		margin-bottom: 1rem;
+	}
+}
+
+@media only screen and (min-width: $breakpoint-sm ) {
+	.login-form {
+		margin: 0 auto;
+		padding: 8rem 2rem 10rem;
+		width: 400px;
+		top: 40px;
+	}
+}

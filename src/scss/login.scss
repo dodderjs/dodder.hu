@@ -1,0 +1,54 @@
+
+
+#Login {
+    margin: 0 auto;
+    padding: 100px 0;
+    width: 220px;
+}
+
+.button-login {
+    -webkit-border-radius: 1px;
+    padding: 0;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: background-color .218s,border-color .218s,box-shadow .218s;
+    transition: background-color .218s,border-color .218s,box-shadow .218s;
+    -webkit-user-select: none;
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    background-color: #fff;
+    color: #757575;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+    height: 50px;
+    width: 100%;
+    display: block;
+}
+.button-login .button-icon {
+    padding: 10px;
+    float: left;
+}
+.button-login .button-label {
+    font-size: 13px;
+    line-height: 48px;
+    font-weight: 500;
+    letter-spacing: .21px;
+    margin-left: 6px;
+    margin-right: 6px;
+    vertical-align: top;
+}
+.button-login.facebook-login {
+    color: #fff;
+    background-color: #3b5998;
+}
+.button-login.facebook-login svg {
+    fill: #fff;
+}
