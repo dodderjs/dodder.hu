@@ -7,16 +7,16 @@ const entities = (state = { movies: {}, series: {} }, action) => {
 	case MEDIA.FETCH_FULFILLED:
 	case MEDIA.MOVIES_FETCH_FULFILLED:
 	case MEDIA.SERIES_FETCH_FULFILLED:
-		if (payload && payload.entities && payload.entities.movies) {
+		if (payload && payload.entities) {
 			return {
 				...state,
 				movies: { 
 					...state.movies, 
-					...payload.entities.movies 
+					...payload.entities.movies || {}
 				},
 				series: { 
 					...state.series, 
-					...payload.entities.series 
+					...payload.entities.series || {}
 				}
 			};
 		}

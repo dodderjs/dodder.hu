@@ -14,7 +14,12 @@ const seriesSchema = new schema.Entity('series', {
 const mediaSchema = new schema.Union({
 	movies: movieSchema,
 	series: seriesSchema
-}, { schemaAttribute: (input) => {
+}, (input) => {
+	if (input.type === 'series') {
+		return input.type;
+	}
+	return `${input.type}s`;
+}); /*{ schemaAttribute: (input) => {
 	if (input.type === 'series') {
 		return input.type;
 	}

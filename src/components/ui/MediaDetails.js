@@ -10,12 +10,12 @@ class MediaDetails extends Component {
 	}
 
 	componentDidMount() {
-		this.props.loadMedia(this.props.id);
+		this.props.loadMedia(this.props.type, this.props.id);
 	}
 
 	componentDidUpdate(prevProps) {
 		if (this.props.id !== prevProps.id) {
-			this.props.loadMedia(this.props.id);
+			this.props.loadMedia(this.props.type, this.props.id);
 		}
 	}
 
@@ -97,6 +97,7 @@ class MediaDetails extends Component {
 
 MediaDetails.propTypes = {
 	id: PropTypes.number.isRequired,
+	type: PropTypes.string.isRequired,
 	loadMedia: PropTypes.func.isRequired,
 	addWishlist: PropTypes.func.isRequired,
 	removeWishlist: PropTypes.func.isRequired,

@@ -20,4 +20,5 @@ const constants = {
 	SERIES_FETCH_FULFILLED: 'SERIES_FETCH_FULFILLED',
 	SERIES_FETCH_REJECTED: 'SERIES_FETCH_REJECTED',
 };
+
 export default constants;

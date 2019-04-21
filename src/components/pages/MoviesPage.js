@@ -10,27 +10,28 @@ class MoviePage extends ListPage {
 }
 
 const mapStateToProps = (state, ownProps) => {
-	const filter = ownProps.match.params.filter || 'all';
+	const { filter = 'all', listtype } = ownProps.match.params;
 
 	const {
-		moviesByFilter,
-		entities: { movies }
+		lists,
+		entities
 	} = state;
-	const { pagination, list, isLoading } = moviesByFilter;
+	const { pagination, list, isLoading } = lists[listtype];
 	//const list = paginateByFilter[filter] && paginateByFilter[filter].list || [];
-	const movieList = list.map(id => movies[id]);
+	const mediaList = list.map(elem => entities[elem.schema || listtype][elem.id || elem]);
 
 	return {
+		listtype,
 		fetching: isLoading,
-		list: movieList,
+		list: mediaList,
 		filter,
 		pagination
 	};
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	nextPage: () => dispatch(nextPage()),
-	setFilter: (filter) => dispatch(setFilter(filter))
+	nextPage: (listtype) => dispatch(nextPage(listtype)),
+	setFilter: (listtype,filter) => dispatch(setFilter(listtype, filter))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);

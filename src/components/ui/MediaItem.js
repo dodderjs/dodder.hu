@@ -26,7 +26,7 @@ class MediaItem extends Component {
 		let { media } = this.props;
 
 		return (<li>
-			<Link to={`/details/${media.id}`} className={`movie ${!media.poster_id && 'no_poster'}`}>
+			<Link to={`/${media.type === 'series' ? media.type : media.type + 's' }/details/${media.id}`} className={`movie ${!media.poster_id && 'no_poster'}`}>
 				<figure>
 					{this.renderPoster()}
 					<div className="movie__fullscreen">

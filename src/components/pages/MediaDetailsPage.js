@@ -5,22 +5,23 @@ import MediaDetails from '../ui/MediaDetails';
 
 
 const mapStateToProps = (state, ownProps) => {
-	const id = parseInt(ownProps.match.params.id);
+	const {id , type } = ownProps.match.params;
 
 	const {
-		entities: { movies },
+		entities,
 		user: { userId }
 	} = state;
 
 	return {
-		id,
-		media: movies[id],
+		id: parseInt(id),
+		type,
+		media: entities[type][id],
 		user: userId
 	};
 };
 
 const mapDispatchToProps = {
-	loadMedia: loadById,
+	loadMedia: (type, id) => loadById(type, id),
 	addWishlist: () => {},
 	removeWishlist: () => {}
 };

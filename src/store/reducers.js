@@ -15,11 +15,19 @@ export default (history) => combineReducers({
 	entities,
 	user,
 	navigation,
-	moviesByFilter: combineReducers({
-		isLoading: loading(MEDIA.MOVIES),
-		filter: filter(MEDIA.MOVIES),
-		list: medialist(MEDIA.MOVIES),
-		pagination: paginate(MEDIA.MOVIES)
+	lists: combineReducers({
+		movies: combineReducers({
+			isLoading: loading(MEDIA.MOVIES),
+			filter: filter(MEDIA.MOVIES),
+			list: medialist(MEDIA.MOVIES),
+			pagination: paginate(MEDIA.MOVIES)
+		}),
+		series: combineReducers({
+			isLoading: loading(MEDIA.SERIES),
+			filter: filter(MEDIA.SERIES),
+			list: medialist(MEDIA.SERIES),
+			pagination: paginate(MEDIA.SERIES)
+		})
 	}),
 	router: connectRouter(history),
 });

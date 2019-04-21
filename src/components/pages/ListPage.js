@@ -10,17 +10,17 @@ export default class ListPage extends Component {
 	}
 
 	componentDidMount() {
-		this.props.setFilter(this.props.filter);
+		this.props.setFilter(this.props.listtype, this.props.filter);
 	}
 
 	componentDidUpdate(prevProps) {
 		if (this.props.filter !== prevProps.filter) {
-			this.props.setFilter(this.props.filter);
+			this.props.setFilter(this.props.listtype, this.props.filter);
 		}
 	}
 
 	handleLoadMoreClick() {
-		!this.props.fetching && this.props.nextPage();
+		!this.props.fetching && this.props.nextPage(this.props.listtype);
 	}
 
 	renderMedia(data, key) {
@@ -43,6 +43,7 @@ export default class ListPage extends Component {
 }
 
 ListPage.propTypes = {
+	listtype: PropTypes.string,
 	filter: PropTypes.string,
 	nextPage: PropTypes.func.isRequired,
 	setFilter: PropTypes.func.isRequired,

@@ -4,29 +4,42 @@ import { ENDPOINTS } from '../config';
 import apiDispatch from './api';
 import Schemas from '../schemas';
 
-export const setFilter = (nextFilter) => (dispatch, getState) => {
+const typeMap = {
+	movies: {
+		endpoint: ENDPOINTS.MOVIES,
+		name: MEDIA.MOVIES,
+	},
+
+	series: {
+		endpoint: ENDPOINTS.SERIES,
+		name: MEDIA.SERIES,
+	}
+}
+export const setFilter = (type, nextFilter) => (dispatch, getState) => {
 	const {
-		moviesByFilter: {
-			filter
+		lists: { 
+			[type]: {
+				filter
+			}
 		}
 	} = getState();
 
 	dispatch({
-		type: MEDIA.MOVIES_SET_FILTER,
+		type: `${typeMap[type].name}_SET_FILTER`,
 		payload: {
 			filter: nextFilter
 		}
 	});
 	
 	try {
-		fetchMovies(dispatch, getState);
+		fetch(type)(dispatch, getState);
 	} catch (error) {
 		dispatch({
 			type: ERROR.ADD,
 			payload: error
 		});
 		dispatch({
-			type: MEDIA.MOVIES_SET_FILTER,
+			type: `${typeMap[type].name}_SET_FILTER`,
 			payload: {
 				filter
 			}
@@ -34,41 +47,45 @@ export const setFilter = (nextFilter) => (dispatch, getState) => {
 	}
 }
 
-export const fetchMovies = (dispatch, getState) => {
+export const fetch = (type) => (dispatch, getState) => {
 	const {
-		moviesByFilter: {
-			filter,
-			pagination: { page }
+		lists: { 
+			[type]: {
+				filter,
+				pagination: { page }
+			}
 		}
 	} = getState();
 
 	return apiDispatch({
-		type: MEDIA.MOVIES_FETCH,
-		schema: Schemas.MOVIE_ARRAY,
-		endpoint: ENDPOINTS.MOVIES,
+		type: `${typeMap[type].name}_FETCH`,
+		schema: Schemas.MEDIA_ARRAY,
+		endpoint: typeMap[type].endpoint,
 		params: filter === 'all' ? {} : { filter },
 		queries: { page }
 	})(dispatch, getState);
 }
 
-export const nextPage = () => (dispatch, getState) => {
+export const nextPage = (type) => (dispatch, getState) => {
 	const {
-		moviesByFilter: {
-			pagination: { page }
+		lists: {
+			[type]: {
+				pagination: { page }
+			}
 		}
 	} = getState();
 
 	dispatch({
-		type: MEDIA.MOVIES_NEXT_PAGE,
+		type: `${typeMap[type].name}_NEXT_PAGE`,
 		payload: {
 			page: page + 1
 		}
 	});
 	try {
-		fetchMovies(dispatch, getState);
+		fetch(type)(dispatch, getState);
 	} catch (error) {
 		dispatch({
-			type: MEDIA.MOVIES_NEXT_PAGE,
+			type: `${typeMap[type].name}_NEXT_PAGE`,
 			payload: {
 				page: page - 1
 			}
@@ -76,18 +93,22 @@ export const nextPage = () => (dispatch, getState) => {
 	}
 }
 
-export const loadById = (id = '') => (dispatch, getState) => {
+export const loadById = (type = 'movies', id) => (dispatch, getState) => {
 	dispatch({
-		type: MEDIA.MOVIES_SELECTED,
+		type: `${typeMap[type].name}_SELECTED`,
 		payload: {
-			id: id
+			id,
+			type
 		}
 	});
 	
 	return apiDispatch({
 		type: MEDIA.FETCH,
-		schema: Schemas.MOVIE,
+		schema: Schemas.MEDIA,
 		endpoint: ENDPOINTS.MEDIA_DETAILS,
-		params: { id: id }
+		params: { 
+			id,
+			type
+		}
 	})(dispatch, getState);
 }

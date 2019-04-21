@@ -21,8 +21,8 @@ const Routes = ({ store, history }) => (
 		<ConnectedRouter history={history}>
 			<App>
 				<Switch>
-					<Route path="/details/:id" component={MediaDetailsPage} />
-					<Route path="/movies/:filter?" component={MoviesPage} />
+					<Route path="/:type(movies|series)/details/:id" component={MediaDetailsPage} />
+					<Route path="/:listtype(movies|series)/:filter?" component={MoviesPage} />
 					<Route path="*" component={ Whoops404 } />
 				</Switch>
 			</App>
