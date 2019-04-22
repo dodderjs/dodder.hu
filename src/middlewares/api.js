@@ -30,27 +30,27 @@ const callApi = async (endpoint, schema, method = 'GET', headers = {}, body = nu
 			if (result.count && result.rows) {
 				const data = normalize(result.rows, schema);
 
-				return { ...data, count: result.count, timesamp: Date.now() };
+				return { ...data, count: result.count };
 			}
 			return normalize(result, schema);
 		} else {
 			throw new Error(`Fetching data wasn't successfull`);
 		}
 	} catch (error) {
-		console.log(error);
+		//console.log(error);
 		throw error;
 	}
 };
 
-const apiMiddleware = store => next => action => {
+const apiMiddleware = ({ dispatch, getState }) => next => action => {
 	const callAPI = action[CALL_API];
 
 	if (typeof callAPI === 'undefined') {
 		return next(action);
 	}
 
-	const state = store.getState();
-	const token = state.token || state.user.token || getStoredData('authToken');
+	const state = getState();
+	const token = state.token || (state.user && state.user.token) || getStoredData('authToken');
 
 	if (token) {
 		headers.authorization = `Bearer ${token}`;
@@ -77,14 +77,14 @@ const apiMiddleware = store => next => action => {
 		return finalAction;
 	};
 
-	next(actionWith({ type: type }));
+	dispatch(actionWith({ type: type }));
 
 	return callApi(endpoint, schema, method, headers, body, params, queries)
-		.then(response => next(actionWith({
+		.then(response => dispatch(actionWith({
 			payload: response,
 			type: type + '_FULFILLED'
 		})))
-		.catch(error => next(actionWith({
+		.catch(error => dispatch(actionWith({
 			type: type + '_REJECTED',
 			payload: {
 				error: error.message || 'Something bad happened'

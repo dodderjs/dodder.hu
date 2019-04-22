@@ -1,6 +1,10 @@
 import MEDIA from '../constants/media';
 
-const entities = (state = { movies: {}, series: {} }, action) => {
+export const INITIAL_STATE = {
+	movies: {},
+	series: {}
+}
+const entities = (state = INITIAL_STATE, action) => {
 	const {type, payload} = action;
 
 	switch (type) {
