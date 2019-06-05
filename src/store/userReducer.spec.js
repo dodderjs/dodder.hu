@@ -25,10 +25,10 @@ describe('User Reducer', () => {
 				email: 'test@dodder.hu',
 				email_verified: true,
 				image: null,
-				name: "Test126 Dodi",
-				role: "user"
+				name: 'Test126 Dodi',
+				role: 'user'
 			}
-		}
+		};
 		const action = {
 			type: USER.FETCH_FULFILLED,
 			payload
@@ -40,9 +40,9 @@ describe('User Reducer', () => {
 				userId: '123',
 				authToken: 'MyTestToken',
 				details: payload.user,
-				loggedIn: true, 
-				status: 'authenticated', 
-				error: null, 
+				loggedIn: true,
+				status: 'authenticated',
+				error: null,
 				isLoading: false
 			}
 		});
@@ -55,7 +55,7 @@ describe('User Reducer', () => {
 				id: '123',
 				email: 'test@dodder.hu',
 			}
-		}
+		};
 		const action = {
 			type: USER.FETCH_REJECTED,
 			payload
@@ -65,7 +65,7 @@ describe('User Reducer', () => {
 			...initialState,
 			...{
 				status: 'rejected',
-				loggedIn: false, 
+				loggedIn: false,
 				isLoading: false
 			}
 		});
@@ -80,7 +80,7 @@ describe('User Reducer', () => {
 			...{
 				status: 'loggedOut',
 				userId: null,
-				loggedIn: false, 
+				loggedIn: false,
 				isLoading: false
 			}
 		});

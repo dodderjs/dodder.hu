@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect, withRouter } from 'react-router';
@@ -7,18 +7,21 @@ import { login } from '../../actions/user';
 import LoginForm from '../ui/LoginForm';
 import { API_ROOT, BASE_URL } from '../../config';
 
-class LoginPage extends Component {
+class LoginPage extends PureComponent {
 	render() {
-		const { authenticated, loginUser, isLoading } = this.props;
-		const { location: { from = '/' } } = this.props;
+		const {
+			authenticated, loginUser, isLoading,
+			location: { from = '/' }
+		} = this.props;
 
 		return authenticated ? (<Redirect to={from} />) : (
 			<div id="LoginPage">
-				<LoginForm 
-					loginUser={loginUser} 
-					isLoading={isLoading} 
+				<LoginForm
+					loginUser={loginUser}
+					isLoading={isLoading}
 					facebookUrl={`${API_ROOT}/auth/facebook?callbackUrl=${BASE_URL}`}
-					googleUrl={`${API_ROOT}/auth/google?callbackUrl=${BASE_URL}`} />
+					googleUrl={`${API_ROOT}/auth/google?callbackUrl=${BASE_URL}`}
+				/>
 			</div>
 		);
 	}

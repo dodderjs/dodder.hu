@@ -8,4 +8,4 @@ export const auth = {
 		this.isAuthenticated = false;
 		setTimeout(cb, 100);
 	}
-}
+};

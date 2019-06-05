@@ -4,10 +4,19 @@ import Loader from './Loader';
 import { topPosition } from '../../utils/positions';
 
 class MediaList extends Component {
+	static propTypes = {
+		renderItem: PropTypes.func.isRequired,
+		items: PropTypes.arrayOf(PropTypes.object).isRequired,
+		fetching: PropTypes.bool,
+		onLoadMoreClick: PropTypes.func.isRequired,
+		threshold: PropTypes.number,
+		totalCount: PropTypes.number
+	};
 
 	static defaultProps = {
 		fetching: true,
-		threshold: 100
+		threshold: 100,
+		totalCount: 0
 	};
 
 	constructor(props) {
@@ -15,20 +24,21 @@ class MediaList extends Component {
 		this.scrollFunction = this.scrollListener.bind(this);
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		this.attachScrollListener();
 	}
 
-	componentDidUpdate () {
+	componentDidUpdate() {
 		this.attachScrollListener();
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.detachScrollListener();
 	}
 
-	attachScrollListener () {
-		if (!this.hasMoreItems() || this.props.fetching) return;
+	attachScrollListener() {
+		const { fetching } = this.props;
+		if (!this.hasMoreItems() || fetching) return;
 
 		window.addEventListener('scroll', this.scrollFunction, true);
 		window.addEventListener('resize', this.scrollFunction, true);
@@ -36,13 +46,17 @@ class MediaList extends Component {
 	}
 
 	scrollListener() {
-		const { onLoadMoreClick, totalCount, threshold, fetching } = this.props;
+		const {
+			onLoadMoreClick, totalCount, threshold, fetching
+		} = this.props;
 
 		if (fetching || totalCount <= 0 || !this.node) return;
 
-		let windowScrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-		let elTotalHeight = topPosition(this.node) + this.node.offsetHeight;
-		let currentBottomPosition = elTotalHeight - windowScrollTop - window.innerHeight;
+		const windowScrollTop = (window.pageYOffset !== undefined)
+			? window.pageYOffset
+			: (document.documentElement || document.body.parentNode || document.body).scrollTop;
+		const elTotalHeight = topPosition(this.node) + this.node.offsetHeight;
+		const currentBottomPosition = elTotalHeight - windowScrollTop - window.innerHeight;
 
 		if (currentBottomPosition < Number(threshold)) {
 			this.detachScrollListener();
@@ -50,7 +64,7 @@ class MediaList extends Component {
 		}
 	}
 
-	detachScrollListener () {
+	detachScrollListener() {
 		window.removeEventListener('scroll', this.scrollFunction, true);
 		window.removeEventListener('resize', this.scrollFunction, true);
 	}
@@ -67,8 +81,7 @@ class MediaList extends Component {
 		if (fetching && (items.length || this.hasMoreItems())) {
 			return <Loader className="spinner__inline" />;
 		}
-
-		return;
+		return '';
 	}
 
 	render() {
@@ -84,8 +97,8 @@ class MediaList extends Component {
 		if (isEmpty) {
 			return <div><i>Nothing here!</i></div>;
 		}
-		return(
-			<div ref={node => this.node = node}>
+		return (
+			<div>
 				<ul className="movie-list clear">
 					{ items.map(renderItem)}
 				</ul>
@@ -95,15 +108,5 @@ class MediaList extends Component {
 		);
 	}
 }
-
-MediaList.propTypes = {
-	renderItem: PropTypes.func.isRequired,
-	items: PropTypes.array.isRequired,
-	fetching: PropTypes.bool.isRequired,
-	onLoadMoreClick: PropTypes.func.isRequired,
-	threshold: PropTypes.number,
-	totalCount: PropTypes.number,
-	lastPage: PropTypes.number
-};
 
 export default MediaList;

@@ -15,14 +15,13 @@ const invoke = action => apiMiddleware(store)(next)(action);
 describe('Api middleware tests', () => {
 	beforeEach(() => {
 		fetch.resetMocks();
-
 	});
-	
-	it('passes through non-api action', () => {
-		const action = { type: 'TEST_NON_API_ACTION' }
 
-		invoke(action)
-		expect(next).toHaveBeenCalledWith(action)
+	it('passes through non-api action', () => {
+		const action = { type: 'TEST_NON_API_ACTION' };
+
+		invoke(action);
+		expect(next).toHaveBeenCalledWith(action);
 	});
 
 	it('dispatches the correct list actions on a SUCCESSFUL api request', async () => {
@@ -31,7 +30,7 @@ describe('Api middleware tests', () => {
 			schema: Schemas.MEDIA_ARRAY,
 			endpoint: ENDPOINTS.SERIES,
 			params: {
-				filter: "onseed"
+				filter: 'onseed'
 			},
 			queries: {
 				page: 0
@@ -41,7 +40,10 @@ describe('Api middleware tests', () => {
 			[CALL_API]: action
 		};
 
-		fetch.mockResponseOnce(JSON.stringify({ rows: [{ id: 1, name: 'test1', type: 'movie' }, { id: 2, name: 'test2', type: 'series' }], count: 2 }))
+		fetch.mockResponseOnce(JSON.stringify({
+			rows: [{ id: 1, name: 'test1', type: 'movie' }, { id: 2, name: 'test2', type: 'series' }],
+			count: 2
+		}));
 
 		await invoke(apiAction);
 
@@ -58,25 +60,25 @@ describe('Api middleware tests', () => {
 					movies: {
 						1: {
 							id: 1,
-							name: "test1",
-							type: "movie",
+							name: 'test1',
+							type: 'movie',
 						}
 					},
 					series: {
 						2: {
 							id: 2,
-							name: "test2",
-							type: "series",
+							name: 'test2',
+							type: 'series',
 						}
 					}
 				},
 				result: [{
 					id: 1,
-					schema: "movies",
+					schema: 'movies',
 				},
 				{
 					id: 2,
-					schema: "series",
+					schema: 'series',
 				}]
 			}
 		});
@@ -88,8 +90,8 @@ describe('Api middleware tests', () => {
 			schema: Schemas.MEDIA,
 			endpoint: ENDPOINTS.MEDIA_DETAILS,
 			params: {
-				id: "1",
-				type: "movies"
+				id: '1',
+				type: 'movies'
 			}
 		};
 		const apiAction = {
@@ -112,26 +114,26 @@ describe('Api middleware tests', () => {
 					movies: {
 						1: {
 							id: 1,
-							name: "test1",
-							type: "movie",
+							name: 'test1',
+							type: 'movie',
 						}
 					}
 				},
 				result: {
 					id: 1,
-					schema: "movies",
+					schema: 'movies',
 				}
 			}
 		});
 	});
-	
+
 	it('dispatches the correct actions on a FAILED api request', async () => {
 		const action = {
 			type: MEDIA.FETCH,
 			schema: Schemas.MEDIA_ARRAY,
-			endpoint: "/series/:filter?",
+			endpoint: '/series/:filter?',
 			params: {
-				filter: "onseed"
+				filter: 'onseed'
 			},
 			queries: {
 				page: 0
@@ -141,10 +143,10 @@ describe('Api middleware tests', () => {
 			[CALL_API]: action
 		};
 
-		fetch.mockReject(new Error('fake error message'))
+		fetch.mockReject(new Error('fake error message'));
 
 		await invoke(apiAction);
-			
+
 		expect(store.dispatch).toHaveBeenCalledWith({
 			type: MEDIA.FETCH
 		});
@@ -152,7 +154,7 @@ describe('Api middleware tests', () => {
 		expect(store.getState).toHaveBeenCalled();
 		expect(store.dispatch).toHaveBeenCalledWith({
 			type: MEDIA.FETCH_REJECTED,
-			payload: { error: "fake error message" }
+			payload: { error: 'fake error message' }
 		});
 	});
-})
+});

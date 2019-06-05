@@ -3,30 +3,28 @@ export const INITIAL_STATE = {
 	totalCount: 0
 };
 
-const paginate = (TYPE) => {
-	return (state = INITIAL_STATE, action) => {
-		const {type, payload} = action;
+const paginate = (TYPE) => (state = INITIAL_STATE, action) => {
+	const { type, payload } = action;
 
-		switch (type) {
-		case `${TYPE}_SET_FILTER`:
-			return {
-				...state,
-				page: 0
-			}
-		case `${TYPE}_NEXT_PAGE`:
-			return {
-				...state,
-				page: payload.page
-			}
-		case `${TYPE}_FETCH_FULFILLED`:
-			return {
-				...state,
-				totalCount: payload.count
-			};
+	switch (type) {
+	case `${TYPE}_SET_FILTER`:
+		return {
+			...state,
+			page: 0
+		};
+	case `${TYPE}_NEXT_PAGE`:
+		return {
+			...state,
+			page: payload.page
+		};
+	case `${TYPE}_FETCH_FULFILLED`:
+		return {
+			...state,
+			totalCount: payload.count
+		};
 
-		default:
-			return state;
-		}
-	};
+	default:
+		return state;
+	}
 };
 export default paginate;

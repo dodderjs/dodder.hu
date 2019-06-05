@@ -11,12 +11,11 @@ export const consoleMessages = store => next => action => {
 			action: ${action}
 			
 		`);
-	
+
 		console.groupEnd();
-	
-	} catch(error) {
+	} catch (error) {
 		console.log(error);
-	
+
 		console.groupEnd();
 	}
 	return result;

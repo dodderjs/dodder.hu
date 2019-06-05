@@ -3,14 +3,10 @@ import ListPage from './ListPage';
 import { nextPage, setFilter } from '../../actions/media';
 
 
-class MyListPage extends ListPage {
-	constructor(props) {
-		super(props);
-	}
-}
+class MyListPage extends ListPage {}
 
 const mapStateToProps = (state, ownProps) => {
-	const { filter = 'all', queries={} } = ownProps.match.params;
+	const { filter = 'all', queries = {} } = ownProps.match.params;
 
 	const {
 		lists,

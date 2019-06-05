@@ -19,7 +19,7 @@ const mediaSchema = new schema.Union({
 		return input.type;
 	}
 	return `${input.type}s`;
-}); /*{ schemaAttribute: (input) => {
+}); /* { schemaAttribute: (input) => {
 	if (input.type === 'series') {
 		return input.type;
 	}
@@ -29,11 +29,11 @@ const mediaSchema = new schema.Union({
 /*const mediaSchema = new schema.Entity.Array({
 	movies: movieSchema,
 	series: seriesSchema
-}, (input) => `${input.type}s`)*/
+}, (input) => `${input.type}s`) */
 
-/*mediaSchema.define({
+/* mediaSchema.define({
  owner: userSchema
- });*/
+ }); */
 
 const Schemas = {
 	USER: userSchema,

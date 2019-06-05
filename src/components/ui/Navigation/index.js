@@ -1,20 +1,23 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
 import NavWithSub from './NavWithSub';
 
-class Navigation extends Component {
+class Navigation extends PureComponent {
+	static propTypes = {
+		navigation: PropTypes.arrayOf(PropTypes.object).isRequired,
+		location: ReactRouterPropTypes.location.isRequired
+	}
+
 	render() {
-		let props = this.props;
+		const { location, navigation } = this.props;
 
 		return (
 			<nav id="Menu">
-				<NavWithSub menu={props.navigation} className='navItem' location={props.location} />
+				<NavWithSub menu={navigation} className="navItem" location={location} />
 			</nav>
 		);
 	}
 }
 
-Navigation.propTypes = {
-	navigation: PropTypes.array.isRequired
-};
-export default Navigation
+export default Navigation;

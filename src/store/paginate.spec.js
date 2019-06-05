@@ -9,17 +9,17 @@ describe('Paginate Reducer', () => {
 	});
 
 	it('Reset page number and total item count on filter change', () => {
-		const payload = { filter: 'onseed' }
+		const payload = { filter: 'onseed' };
 		const action = {
-			type: MEDIA.SET_FILTER, 
+			type: MEDIA.SET_FILTER,
 			payload
 		};
 
 		expect(paginateReducer(MEDIA.MEDIAS)(undefined, action)).toEqual(initialState);
 	});
 	it('Next page', () => {
-		const pageData = {page: 1};
-		const transformedPageData = {page: 1};
+		const pageData = { page: 1 };
+		const transformedPageData = { page: 1 };
 
 		const action = {
 			type: MEDIA.NEXT_PAGE,
@@ -33,8 +33,10 @@ describe('Paginate Reducer', () => {
 	});
 
 	it('Update page and total count on media list fetch MEDIA_FETCH_FULFILLED', () => {
-		const payload = { entities: {}, result:[], count: 3, timestamp: Date.now() };
-		const transformedMediaData = {totalCount: 3};
+		const payload = {
+			entities: {}, result: [], count: 3, timestamp: Date.now()
+		};
+		const transformedMediaData = { totalCount: 3 };
 
 		const action = {
 			type: MEDIA.FETCH_FULFILLED,
@@ -46,5 +48,4 @@ describe('Paginate Reducer', () => {
 			...transformedMediaData
 		});
 	});
-
 });

@@ -10,7 +10,8 @@
 		"build:prod": "webpack --mode production --config webpack.config.prod.js",
 		"build:dev": "webpack -d dist --mode development --config webpack.config.dev.js",
 		"test": "jest",
-		"analyze-bundle": "babel-node ./tools/analyzeBundle.js"
+		"analyze-bundle": "babel-node ./tools/analyzeBundle.js",
+		"fix": "npx eslint src --fix"
 	},
 	"author": "dodderjs",
 	"license": "ISC",
@@ -90,6 +91,7 @@
 		"history": "^4.9.0",
 		"lodash": "4.17.11",
 		"normalizr": "3.3.0",
+		"path-to-regexp": "3.0.0",
 		"prop-types": "^15.7.2",
 		"query-string": "6.6.0",
 		"react": "^16.8.3",

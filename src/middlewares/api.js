@@ -1,23 +1,23 @@
 import { normalize } from 'normalizr';
+import pathToRegexp from 'path-to-regexp';
 import { API_ROOT } from '../config';
 import { CALL_API } from '../constants/api';
-import pathToRegexp from 'path-to-regexp';
 
 const callApi = async (endpoint, schema, method = 'GET', headers = {}, body = null, params = {}, queries = {}) => {
-	let url = new URL(`${API_ROOT}${pathToRegexp.compile(endpoint)(params)}`);
+	const url = new URL(`${API_ROOT}${pathToRegexp.compile(endpoint)(params)}`);
 	url.search = new URLSearchParams(queries);
 
 	const apiOptions = {
-		method: method,
+		method,
 		mode: 'cors',
-		//credentials: 'same-origin',
+		// credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json',
 			...headers
 		},
 		body: body && JSON.stringify(body),
-		redirect: "follow", // manual, *follow, error
-		referrer: "no-referrer" // no-referrer, *client
+		redirect: 'follow', // manual, *follow, error
+		referrer: 'no-referrer' // no-referrer, *client
 	};
 	try {
 		const response = await fetch(url, apiOptions);
@@ -37,9 +37,8 @@ const callApi = async (endpoint, schema, method = 'GET', headers = {}, body = nu
 				return { ...data, count: result.count };
 			}
 			return normalize(result, schema);
-		} else {
-			throw new Error(response.statusText || `Fetching data wasn't successfull`);
 		}
+		throw new Error(response.statusText || 'Fetching data wasn\'t successfull');
 	} catch (error) {
 		throw error;
 	}
@@ -52,8 +51,10 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
 		return next(action);
 	}
 
-	let { endpoint, method, headers, body, params, queries } = callAPI;
-	const { type, schema } = callAPI;
+	let { endpoint, headers } = callAPI;
+	const {
+		type, method, schema, body, params, queries
+	} = callAPI;
 
 	const state = getState();
 	const token = state.user && state.user.authToken;
@@ -61,7 +62,7 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
 	if (token) {
 		headers = {
 			authorization: `Bearer ${token}`
-		}
+		};
 	}
 
 	if (typeof endpoint === 'function') {
@@ -82,17 +83,17 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
 		return finalAction;
 	};
 
-	dispatch(actionWith({ type: type }));
+	dispatch(actionWith({ type }));
 
 	return callApi(endpoint, schema, method, headers, body, params, queries)
 		.then(response => dispatch(actionWith({
 			payload: response,
-			type: type + '_FULFILLED'
+			type: `${type}_FULFILLED`
 		})))
 		.catch(error => dispatch(actionWith({
-			type: type + '_REJECTED',
+			type: `${type}_REJECTED`,
 			payload: {
-				error: error && error.message || 'Something bad happened'
+				error: (error && error.message) || 'Something bad happened'
 			}
 		})));
 };

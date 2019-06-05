@@ -6,7 +6,7 @@ import { ENDPOINTS } from '../config';
 export const fetchUser = apiDispatch({
 	type: USER.FETCH,
 	schema: Schemas.USER,
-	endpoint: `/user/:id`
+	endpoint: '/user/:id'
 });
 
 export function logoutUser() {
@@ -15,28 +15,26 @@ export function logoutUser() {
 	};
 }
 
-export const login = (email, password) => (dispatch, getState) => {	
+export const login = (email, password) => (dispatch, getState) => {
 	dispatch({
 		type: USER.LOGIN
 	});
-	
+
 	return apiDispatch({
 		type: USER.FETCH,
 		method: 'POST',
 		endpoint: ENDPOINTS.USER_LOGIN,
-		body: { 
+		body: {
 			email,
 			password
 		}
 	})(dispatch, getState);
-}
-export const meFromToken = (token) => (dispatch, getState) => {
-	return apiDispatch({
-		type: USER.VALIDATE,
-		method: 'POST',
-		endpoint: ENDPOINTS.USER_VALIDATE,
-		body: { 
-			code: token
-		}
-	})(dispatch, getState);
-}
+};
+export const meFromToken = (token) => (dispatch, getState) => apiDispatch({
+	type: USER.VALIDATE,
+	method: 'POST',
+	endpoint: ENDPOINTS.USER_VALIDATE,
+	body: {
+		code: token
+	}
+})(dispatch, getState);

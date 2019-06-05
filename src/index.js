@@ -4,7 +4,7 @@ import { AppContainer } from 'react-hot-loader';
 import storeFactory, { history } from './store';
 import Routes from './components/routes';
 
-//require('../favicon.ico'); // Tell webpack to load favicon.ico
+// require('../favicon.ico'); // Tell webpack to load favicon.ico
 
 
 const initialState = (localStorage['redux-store'])

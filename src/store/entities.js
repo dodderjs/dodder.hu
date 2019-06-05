@@ -3,9 +3,9 @@ import MEDIA from '../constants/media';
 export const INITIAL_STATE = {
 	movies: {},
 	series: {}
-}
+};
 const entities = (state = INITIAL_STATE, action) => {
-	const {type, payload} = action;
+	const { type, payload } = action;
 
 	switch (type) {
 	case MEDIA.FETCH_FULFILLED:
@@ -14,12 +14,12 @@ const entities = (state = INITIAL_STATE, action) => {
 		if (payload && payload.entities) {
 			return {
 				...state,
-				movies: { 
-					...state.movies, 
+				movies: {
+					...state.movies,
 					...payload.entities.movies || {}
 				},
-				series: { 
-					...state.series, 
+				series: {
+					...state.series,
 					...payload.entities.series || {}
 				}
 			};

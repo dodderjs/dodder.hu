@@ -31,5 +31,4 @@ describe('Loading Reducer', () => {
 
 		expect(loadingReducer(MEDIA.MEDIAS)(undefined, action)).toEqual(false);
 	});
-
 });

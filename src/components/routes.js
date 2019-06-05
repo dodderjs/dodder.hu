@@ -12,12 +12,12 @@ import MoviesPage from './pages/MoviesPage';
 import MyListPage from './pages/MyListPage';
 import MediaDetailsPage from './pages/MediaDetailsPage';
 import Whoops404 from './ui/404';
-/*import SeriesPage from './containers/SeriesPage'; // eslint-disable-line import/no-named-as-default
+/* import SeriesPage from './containers/SeriesPage'; // eslint-disable-line import/no-named-as-default
 import WishlistPage from './containers/WishlistPage'; // eslint-disable-line import/no-named-as-default
 import LoginPage from './containers/LoginPage'; // eslint-disable-line import/no-named-as-default
 import MovieDetails from './containers/MovieDetails'; // eslint-disable-line import/no-named-as-default
 import SeriesDetails from './containers/SeriesDetails'; // eslint-disable-line import/no-named-as-default
-import LogoutPage from './containers/LogoutPage';*/
+import LogoutPage from './containers/LogoutPage'; */
 
 const Routes = ({ store, history }) => (
 	<Provider store={store}>
@@ -29,7 +29,7 @@ const Routes = ({ store, history }) => (
 					<Route path="/:listtype(movies|series)/:filter?" component={MoviesPage} />
 					<PrivateRoute path="/me/list/:filter?" component={MyListPage} />
 					<Redirect exact path="/" to="movies" />
-					<Route path="*" component={ Whoops404 } />
+					<Route path="*" component={Whoops404} />
 				</Switch>
 			</App>
 		</ConnectedRouter>

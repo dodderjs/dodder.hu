@@ -3,11 +3,11 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
+import throttle from 'lodash/throttle';
 import appReducer from './reducers';
 import apiMiddleware from '../middlewares/api';
 import { consoleMessages } from '../middlewares/consoleMessages';
 import { loadStoreState, saveStoreState } from '../utils/storage';
-import throttle from 'lodash/throttle';
 
 export const history = createBrowserHistory();
 
@@ -37,8 +37,8 @@ export default (initialState = {}) => {
 	store.subscribe(throttle(() => {
 		saveStoreState({
 			user: store.getState().user
-		})
+		});
 	}));
-	
+
 	return store;
 };

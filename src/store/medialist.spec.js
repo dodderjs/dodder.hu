@@ -9,9 +9,9 @@ describe('Media Reducer', () => {
 	});
 
 	it('Change filter', () => {
-		const payload = { filter: 'onseed' }
+		const payload = { filter: 'onseed' };
 		const action = {
-			type: MEDIA.SET_FILTER, 
+			type: MEDIA.SET_FILTER,
 			payload
 		};
 
@@ -19,8 +19,10 @@ describe('Media Reducer', () => {
 	});
 
 	it('Saves the media data to the store on MEDIA_FETCH_FULFILLED', () => {
-		const payload = { entities: {1: {}, 2: {}, 3: {}}, result: [1,2,3], count: 3, timestamp: Date.now() };
-		const medialistData = [1,2,3] ;
+		const payload = {
+			entities: { 1: {}, 2: {}, 3: {} }, result: [1, 2, 3], count: 3, timestamp: Date.now()
+		};
+		const medialistData = [1, 2, 3];
 
 		const action = {
 			type: MEDIA.FETCH_FULFILLED,

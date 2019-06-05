@@ -4,7 +4,7 @@ import USER from '../constants/user';
 export const INITIAL_STATE = {
 	userId: null,
 	details: null,
-	status:null,
+	status: null,
 	loggedIn: false,
 	authToken: null,
 	isLoading: false,
@@ -12,9 +12,9 @@ export const INITIAL_STATE = {
 };
 
 const user = (state = INITIAL_STATE, action) => {
-	const {type, payload} = action;
+	const { type, payload } = action;
 
-	switch(type) {
+	switch (type) {
 	case USER.VALIDATE:
 	case USER.FETCH:
 		return {
@@ -24,13 +24,13 @@ const user = (state = INITIAL_STATE, action) => {
 	case USER.VALIDATE_FULFILLED:
 	case USER.FETCH_FULFILLED:
 		return {
-			...state, 
+			...state,
 			userId: payload.user.id,
 			authToken: payload.token,
 			details: payload.user,
-			loggedIn: true, 
-			status: 'authenticated', 
-			error: null, 
+			loggedIn: true,
+			status: 'authenticated',
+			error: null,
 			isLoading: false
 		};
 	case USER.VALIDATE_REJECTED:
@@ -46,11 +46,11 @@ const user = (state = INITIAL_STATE, action) => {
 		};
 	case USER.LOGOUT:
 		return {
-			...state, 
+			...state,
 			status: 'loggedOut',
-			userId:null, 
+			userId: null,
 			details: null,
-			error:null, 
+			error: null,
 			isLoading: false,
 			loggedIn: false
 		};

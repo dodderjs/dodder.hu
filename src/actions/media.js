@@ -18,22 +18,11 @@ const typeMap = {
 		endpoint: ENDPOINTS.MYLIST,
 		name: MEDIA.MYLIST,
 	}
-}
-export const setFilter = (type, filter, queries) => (dispatch, getState) => {
-	dispatch({
-		type: `${typeMap[type].name}_SET_FILTER`,
-		payload: {
-			filter: filter,
-			queries: queries
-		}
-	});
-	
-	fetch(type)(dispatch, getState);
-}
+};
 
 export const fetch = (type) => (dispatch, getState) => {
 	const {
-		lists: { 
+		lists: {
 			[type]: {
 				filter,
 				queries,
@@ -49,7 +38,19 @@ export const fetch = (type) => (dispatch, getState) => {
 		params: filter === 'all' ? {} : { filter },
 		queries: { page, ...queries }
 	})(dispatch, getState);
-}
+};
+
+export const setFilter = (type, filter, queries) => (dispatch, getState) => {
+	dispatch({
+		type: `${typeMap[type].name}_SET_FILTER`,
+		payload: {
+			filter,
+			queries
+		}
+	});
+
+	fetch(type)(dispatch, getState);
+};
 
 export const nextPage = (type) => (dispatch, getState) => {
 	const {
@@ -67,7 +68,7 @@ export const nextPage = (type) => (dispatch, getState) => {
 		}
 	});
 	fetch(type)(dispatch, getState);
-}
+};
 
 export const loadById = (type = 'movies', id) => (dispatch, getState) => {
 	dispatch({
@@ -77,14 +78,14 @@ export const loadById = (type = 'movies', id) => (dispatch, getState) => {
 			type
 		}
 	});
-	
+
 	return apiDispatch({
 		type: MEDIA.FETCH,
 		schema: Schemas.MEDIA,
 		endpoint: ENDPOINTS.MEDIA_DETAILS,
-		params: { 
+		params: {
 			id,
 			type
 		}
 	})(dispatch, getState);
-}
+};

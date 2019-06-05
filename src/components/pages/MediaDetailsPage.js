@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import { loadById } from '../../actions/media';
 import { withRouter } from 'react-router';
+import { loadById } from '../../actions/media';
 import MediaDetails from '../ui/MediaDetails';
 
 
 const mapStateToProps = (state, ownProps) => {
-	const {id , type } = ownProps.match.params;
+	const { id, type } = ownProps.match.params;
 
 	const {
 		entities,
@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 	} = state;
 
 	return {
-		id: parseInt(id),
+		id: Number.parseInt(id, 10),
 		type,
 		media: entities[type][id],
 		user: userId

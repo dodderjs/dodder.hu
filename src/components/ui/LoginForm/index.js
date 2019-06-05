@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import { MdLock } from 'react-icons/md';
 import Loader from '../Loader';
 import LoginSocial from './LoginSocial';
 import './login.scss';

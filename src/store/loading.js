@@ -1,7 +1,7 @@
 export const INITIAL_STATE = false;
 
 const loading = (type) => (state = INITIAL_STATE, action) => {
-	switch(action.type) {
+	switch (action.type) {
 	case `${type}_NEXT_PAGE`:
 	case `${type}_FETCH`:
 		return true;
