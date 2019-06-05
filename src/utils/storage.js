@@ -1,23 +1,20 @@
-import Cookies from 'browser-cookies';
-
-export function setStoredData (key, val) {
-	Cookies.set(key, JSON.stringify(val), {
-		expires: 30,
-		path:    '/'
-	});
-}
-
-
-export function getStoredData (key) {
-	let val = Cookies.get(key);
-
+export const loadStoreState = (initialState) => {
 	try {
-		return JSON.parse(val);
-	} catch (err) {
-		return val && val.replace(/("|')/g, "");
+		const serializedState = localStorage.getItem('state');
+		if (serializedState) {
+			return JSON.parse(serializedState);
+		}
+
+		return initialState;
+	} catch(e) {
+		return undefined;
 	}
 }
-
-export function removeStoredData (key) {
-	Cookies.erase(key);
+export const saveStoreState = (state) => {
+	try {
+		const serializedState = JSON.stringify(state);
+		localStorage.setItem('state', serializedState);
+	} catch(e) {
+		// error during the save
+	}
 }

@@ -1,21 +1,42 @@
 import Schemas from '../schemas';
 import USER from '../constants/user';
 import apiDispatch from './api';
+import { ENDPOINTS } from '../config';
 
 export const fetchUser = apiDispatch({
 	type: USER.FETCH,
 	schema: Schemas.USER,
-	endpoint: `/user/me`
+	endpoint: `/user/:id`
 });
 
 export function logoutUser() {
 	return {
-		type: USER.LOGOUT_USER
+		type: USER.LOGOUT
 	};
 }
 
-export function login() {
-	return {
-		type: USER.LOGIN_USER
-	};
+export const login = (email, password) => (dispatch, getState) => {	
+	dispatch({
+		type: USER.LOGIN
+	});
+	
+	return apiDispatch({
+		type: USER.FETCH,
+		method: 'POST',
+		endpoint: ENDPOINTS.USER_LOGIN,
+		body: { 
+			email,
+			password
+		}
+	})(dispatch, getState);
+}
+export const meFromToken = (token) => (dispatch, getState) => {
+	return apiDispatch({
+		type: USER.VALIDATE,
+		method: 'POST',
+		endpoint: ENDPOINTS.USER_VALIDATE,
+		body: { 
+			code: token
+		}
+	})(dispatch, getState);
 }

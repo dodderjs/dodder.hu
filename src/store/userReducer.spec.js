@@ -19,9 +19,15 @@ describe('User Reducer', () => {
 
 	it('Authenticates the user on USER_FETCH_FULFILLED', () => {
 		const payload = {
-			userId: '123',
-			userName: 'test@dodder.hu',
-			authToken: 'MyTestToken'
+			token: 'MyTestToken',
+			user: {
+				id: '123',
+				email: 'test@dodder.hu',
+				email_verified: true,
+				image: null,
+				name: "Test126 Dodi",
+				role: "user"
+			}
 		}
 		const action = {
 			type: USER.FETCH_FULFILLED,
@@ -30,10 +36,13 @@ describe('User Reducer', () => {
 
 		expect(userReducer(undefined, action)).toEqual({
 			...initialState,
-			...payload,
 			...{
+				userId: '123',
+				authToken: 'MyTestToken',
+				details: payload.user,
 				loggedIn: true, 
-				status:'authenticated', 
+				status: 'authenticated', 
+				error: null, 
 				isLoading: false
 			}
 		});
@@ -41,9 +50,11 @@ describe('User Reducer', () => {
 
 	it('Authenticates the user on USER_FETCH_REJECTED', () => {
 		const payload = {
-			userId: '123',
-			userName: 'test@dodder.hu',
-			authToken: ''
+			token: '',
+			user: {
+				id: '123',
+				email: 'test@dodder.hu',
+			}
 		}
 		const action = {
 			type: USER.FETCH_REJECTED,

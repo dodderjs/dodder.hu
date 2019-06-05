@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect, withRouter } from 'react-router';
@@ -7,27 +7,18 @@ import { login } from '../../actions/user';
 import LoginForm from '../ui/LoginForm';
 import { API_ROOT, BASE_URL } from '../../config';
 
-class LoginPage extends React.PureComponent {
+class LoginPage extends Component {
 	render() {
 		const { authenticated, loginUser, isLoading } = this.props;
 		const { location: { from = '/' } } = this.props;
 
 		return authenticated ? (<Redirect to={from} />) : (
-			<div>
-				<LoginForm loginUser={loginUser} isLoading={isLoading} />
-				<a href={`${API_ROOT}/auth/google?callbackUrl=${BASE_URL}`} className="button google-login button-login">
-					<span className="button-icon">
-						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 48 48" className="abcRioButtonSvg"><g><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" /><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" /><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" /><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" /><path fill="none" d="M0 0h48v48H0z" /></g></svg>
-					</span>
-					<span className="button-label">Sign in with Google+</span>
-				</a>
-				<br />
-				<a href={`${API_ROOT}/auth/facebook?callbackUrl=${BASE_URL}`}  className="button facebook-login button-login">
-					<span className="button-icon">
-						<svg viewBox="0 0 33 33" width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><g><path d="M 17.996,32L 12,32 L 12,16 l-4,0 l0-5.514 l 4-0.002l-0.006-3.248C 11.993,2.737, 13.213,0, 18.512,0l 4.412,0 l0,5.515 l-2.757,0 c-2.063,0-2.163,0.77-2.163,2.209l-0.008,2.76l 4.959,0 l-0.585,5.514L 18,16L 17.996,32z" /></g></svg>
-					</span>
-					<span className="button-label">Sign in with Facebook</span>
-				</a>
+			<div id="LoginPage">
+				<LoginForm 
+					loginUser={loginUser} 
+					isLoading={isLoading} 
+					facebookUrl={`${API_ROOT}/auth/facebook?callbackUrl=${BASE_URL}`}
+					googleUrl={`${API_ROOT}/auth/google?callbackUrl=${BASE_URL}`} />
 			</div>
 		);
 	}
@@ -46,7 +37,7 @@ LoginPage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-	authenticated: state.user.authToken && state.user.userName,
+	authenticated: state.user.loggedIn,
 	isLoading: state.user.isLoading
 });
 const mapDispatchToProps = dispatch => ({

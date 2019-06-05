@@ -1,12 +1,15 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
 import App from '.';
+import PrivateRoute from './containers/PrivateRoute';
+import LoginPage from './pages/LoginPage';
 import MoviesPage from './pages/MoviesPage';
+import MyListPage from './pages/MyListPage';
 import MediaDetailsPage from './pages/MediaDetailsPage';
 import Whoops404 from './ui/404';
 /*import SeriesPage from './containers/SeriesPage'; // eslint-disable-line import/no-named-as-default
@@ -21,8 +24,11 @@ const Routes = ({ store, history }) => (
 		<ConnectedRouter history={history}>
 			<App>
 				<Switch>
+					<Route path="/login" component={LoginPage} />
 					<Route path="/:type(movies|series)/details/:id" component={MediaDetailsPage} />
 					<Route path="/:listtype(movies|series)/:filter?" component={MoviesPage} />
+					<PrivateRoute path="/me/list/:filter?" component={MyListPage} />
+					<Redirect exact path="/" to="movies" />
 					<Route path="*" component={ Whoops404 } />
 				</Switch>
 			</App>

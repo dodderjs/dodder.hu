@@ -3,30 +3,29 @@ import ListPage from './ListPage';
 import { nextPage, setFilter } from '../../actions/media';
 
 
-class MoviePage extends ListPage {
+class MyListPage extends ListPage {
 	constructor(props) {
 		super(props);
 	}
 }
 
 const mapStateToProps = (state, ownProps) => {
-	const { filter = 'all', listtype, queries } = ownProps.match.params;
+	const { filter = 'all', queries={} } = ownProps.match.params;
 
 	const {
 		lists,
 		entities
 	} = state;
-	const { pagination, list, isLoading } = lists[listtype];
-	//const list = paginateByFilter[filter] && paginateByFilter[filter].list || [];
-	const mediaList = list.map(elem => entities[elem.schema || listtype][elem.id || elem]);
+	const { pagination, list, isLoading } = lists.mylist;
+	const mediaList = list.map(elem => entities[elem.schema][elem.id || elem]);
 
 	return {
 		queries,
-		listtype,
 		fetching: isLoading,
 		list: mediaList,
 		filter,
-		pagination
+		pagination,
+		listtype: 'mylist'
 	};
 };
 
@@ -35,4 +34,4 @@ const mapDispatchToProps = (dispatch) => ({
 	setFilter: (listtype, filter, queries) => dispatch(setFilter(listtype, filter, queries))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MyListPage);

@@ -2,7 +2,7 @@ import { schema } from 'normalizr';
 
 
 const userSchema = new schema.Entity('users', {
-	idAttribute: user => user.id
+	idAttribute: user => user.user.id
 });
 
 const movieSchema = new schema.Entity('movies', {

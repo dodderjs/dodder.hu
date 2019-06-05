@@ -1,7 +1,8 @@
-import React from 'react';
-import Navigation from './containers/Navigation';
+/* eslint-disable no-mixed-spaces-and-tabs */
+import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
-import { PropTypes } from 'prop-types';
+import { meFromToken } from '../actions/user';
+import App from './ui/App.js';
 
 import '../scss/normalize.scss';
 import '../scss/core.scss';
@@ -9,14 +10,22 @@ import '../scss/spinner.scss';
 import '../scss/app.scss';
 import '../scss/mediaqueries.scss';
 
-const App = hot(module)(({ children }) => (
-	<div className="app">
-		<Navigation />
-		{children}
-	</div>
-));
+const mapDispatchToProps = (dispatch) => {
+	return {
+		loadUserFromToken: (token) => {
+			if(!token || token === '') {//if there is no token, dont bother
+				return;
+			}
 
-App.propTypes = {
-	children: PropTypes.node,
+			dispatch(meFromToken(token))
+		}
+	}
+}
+
+const mapStateToProps = (state) => {
+	return {
+		authtoken: state.user.authToken
+	};
 };
-export default App;
+
+export default hot(module)(connect(mapStateToProps, mapDispatchToProps)(App));

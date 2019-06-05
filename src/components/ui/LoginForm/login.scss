@@ -1,16 +1,8 @@
-@import './scss-variables/colors';
-@import './scss-variables/breakpoints';
+@import '../../scss/scss-variables/colors';
 
 .login-form {
 	display: block;
-	margin: 0 24px;
-	background: $base;
-	padding: 20px;
 	align-items: center;
-	flex-direction: column;
-	border-radius: 4px;
-	color: $text-dark;
-	top: 64px;
 	position: relative;
 
 	.login-form-title {
@@ -33,17 +25,88 @@
 		color: $base;
 		background-color: $app-bg;
 	}
-	.login-form-field,
+
+	.login-form-field {
+		margin-bottom: 1rem;
+		input {
+			width: 100%;
+			height: 40px;
+			width: 100%;
+			font-size: 1.6rem;
+			padding: 2px 10px;
+			outline: none;
+			box-sizing: border-box;
+			margin-bottom: 1rem;
+		}
+	}
+
 	.login-form-button {
+		background-color: $login-button;
+		color: $login-button-text;
+		text-align: center;
+		font-weight: bold;
 		margin-bottom: 1rem;
 	}
 }
 
-@media only screen and (min-width: $breakpoint-sm ) {
-	.login-form {
-		margin: 0 auto;
-		padding: 8rem 2rem 10rem;
-		width: 400px;
-		top: 40px;
+
+.button-login {
+    -webkit-border-radius: 1px;
+    padding: 0;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: background-color .218s,border-color .218s,box-shadow .218s;
+    transition: background-color .218s,border-color .218s,box-shadow .218s;
+    -webkit-user-select: none;
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    background-color: #fff;
+    color: #757575;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+    height: 50px;
+	
+	.button-icon {
+		padding: 10px;
+		float: left;
 	}
+	
+	.button-label {
+		font-size: 13px;
+		line-height: 48px;
+		font-weight: 500;
+		letter-spacing: .21px;
+		margin-left: 6px;
+		margin-right: 6px;
+		vertical-align: top;
+	}
+	&.facebook-login {
+		color: #fff;
+		background-color: #3b5998;
+	}
+	&.facebook-login svg {
+		fill: #fff;
+	}
+}
+
+.login-social--or {
+	margin: 10px 0;
+    text-align: center;
+}
+.login-social--buttons {
+	display: flex;
+	margin: 0 -5px;
+	
+}
+.login-social--buttons .button-login{
+	flex-grow: 1;
+	margin: 5px;
 }

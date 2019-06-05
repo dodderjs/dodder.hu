@@ -8,7 +8,6 @@
 	right: 0;
 	background-color: $navigation-bg; /*rgba(247, 248, 249, 0.95);*/
 	z-index: 700;
-	height: 82px;
 	min-width: 320px;
 	box-shadow: 1px 0 3px rgba(0, 0, 0, 0.56);
 }
@@ -17,6 +16,10 @@
 	padding: 0;
 	margin: 0;
 	line-height: 17px;
+	
+	&.navigation--has-active-submenu {
+		height: 82px;
+	}
 
 	.navItem,
 	.submenu li {

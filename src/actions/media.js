@@ -1,5 +1,4 @@
 import MEDIA from '../constants/media';
-import ERROR from '../constants/error';
 import { ENDPOINTS } from '../config';
 import apiDispatch from './api';
 import Schemas from '../schemas';
@@ -13,38 +12,23 @@ const typeMap = {
 	series: {
 		endpoint: ENDPOINTS.SERIES,
 		name: MEDIA.SERIES,
+	},
+
+	mylist: {
+		endpoint: ENDPOINTS.MYLIST,
+		name: MEDIA.MYLIST,
 	}
 }
-export const setFilter = (type, nextFilter) => (dispatch, getState) => {
-	const {
-		lists: { 
-			[type]: {
-				filter
-			}
-		}
-	} = getState();
-
+export const setFilter = (type, filter, queries) => (dispatch, getState) => {
 	dispatch({
 		type: `${typeMap[type].name}_SET_FILTER`,
 		payload: {
-			filter: nextFilter
+			filter: filter,
+			queries: queries
 		}
 	});
 	
-	try {
-		fetch(type)(dispatch, getState);
-	} catch (error) {
-		dispatch({
-			type: ERROR.ADD,
-			payload: error
-		});
-		dispatch({
-			type: `${typeMap[type].name}_SET_FILTER`,
-			payload: {
-				filter
-			}
-		});
-	}
+	fetch(type)(dispatch, getState);
 }
 
 export const fetch = (type) => (dispatch, getState) => {
@@ -52,6 +36,7 @@ export const fetch = (type) => (dispatch, getState) => {
 		lists: { 
 			[type]: {
 				filter,
+				queries,
 				pagination: { page }
 			}
 		}
@@ -62,7 +47,7 @@ export const fetch = (type) => (dispatch, getState) => {
 		schema: Schemas.MEDIA_ARRAY,
 		endpoint: typeMap[type].endpoint,
 		params: filter === 'all' ? {} : { filter },
-		queries: { page }
+		queries: { page, ...queries }
 	})(dispatch, getState);
 }
 
@@ -81,16 +66,7 @@ export const nextPage = (type) => (dispatch, getState) => {
 			page: page + 1
 		}
 	});
-	try {
-		fetch(type)(dispatch, getState);
-	} catch (error) {
-		dispatch({
-			type: `${typeMap[type].name}_NEXT_PAGE`,
-			payload: {
-				page: page - 1
-			}
-		});
-	}
+	fetch(type)(dispatch, getState);
 }
 
 export const loadById = (type = 'movies', id) => (dispatch, getState) => {

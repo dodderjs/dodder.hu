@@ -1,4 +1,4 @@
-FROM node:10.1.0
+FROM node:12.0
 
 ENV WWW=/usr/src/app
 
@@ -15,6 +15,8 @@ RUN npm install
 
 ENV PORT 8800
 EXPOSE $PORT
+
+RUN CMD npm rebuild node-sass
 
 # Serve the app
 CMD ["npm", "start"]

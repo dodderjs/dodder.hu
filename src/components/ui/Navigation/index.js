@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import NavLinkWithSub from './NavLinkWithSub';
+import NavWithSub from './NavWithSub';
 
 class Navigation extends Component {
 	render() {
@@ -8,9 +8,7 @@ class Navigation extends Component {
 
 		return (
 			<nav id="Menu">
-				<ul className="navigation">
-					<NavLinkWithSub menu={props.navigation} className='navItem' />
-				</ul>
+				<NavWithSub menu={props.navigation} className='navItem' location={props.location} />
 			</nav>
 		);
 	}

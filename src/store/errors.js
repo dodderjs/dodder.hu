@@ -1,8 +1,6 @@
 import ERRORS from '../constants/error';
 
-const INITIAL_STATE = {
-	errors: []
-};
+const INITIAL_STATE = [];
 
 const errors = (state = INITIAL_STATE, action) => {
 	const {type, payload} = action;
@@ -10,14 +8,14 @@ const errors = (state = INITIAL_STATE, action) => {
 	if (type.endsWith('_REJECTED')) {
 		return [
 			...state,
-			payload
+			payload.error
 		];
 	}
 	switch(action.type) {
 	case ERRORS.ADD :
 		return [
 			...state,
-			payload
+			payload.error
 		];
 	case ERRORS.CLEAR :
 		return state.filter((message, i) => i !== payload)

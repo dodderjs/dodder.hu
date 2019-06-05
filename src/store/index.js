@@ -6,6 +6,8 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import appReducer from './reducers';
 import apiMiddleware from '../middlewares/api';
 import { consoleMessages } from '../middlewares/consoleMessages';
+import { loadStoreState, saveStoreState } from '../utils/storage';
+import throttle from 'lodash/throttle';
 
 export const history = createBrowserHistory();
 
@@ -21,8 +23,8 @@ const middlewares = [
 export default (initialState = {}) => {
 	const store = createStore(
 		appReducer(history),
-		initialState,
-		composeEnhancers(applyMiddleware(...middlewares)),
+		loadStoreState(initialState),
+		composeEnhancers(applyMiddleware(...middlewares))
 	);
 
 	if (module.hot) {
@@ -32,5 +34,11 @@ export default (initialState = {}) => {
 		});
 	}
 
+	store.subscribe(throttle(() => {
+		saveStoreState({
+			user: store.getState().user
+		})
+	}));
+	
 	return store;
 };

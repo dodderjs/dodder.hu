@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import { __RouterContext as RouterContext, matchPath } from "react-router";
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import Sub from './Sub';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
 function getIsActive(to){
 	return function(match, location) {
@@ -9,13 +12,18 @@ function getIsActive(to){
 	}
 }
 
-class NavLinkWithSub extends Component {
+const escapedPath = (path) => path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
+
+class NavWithSub extends Component {
+	hasActiveSubmenu = false;
 	render() {
-		let props = {...this.props},
-			{menu} = props;
-		return  menu.map((menu) => {
+		const { location, menu} = this.props;
+
+		const content = menu.map((menu) => {
 			let selectedChild = menu.submenu && menu.submenu.find((c) => c.to === menu.to);
 			let {submenu: submenus, id, to, text} = menu;
+
+			this.hasActiveSubmenu = this.hasActiveSubmenu || submenus && getIsActive(to)(matchPath(location.pathname, { path: escapedPath(to) }), location);
 
 			return (
 				<li className="navItem" key={id} >
@@ -26,20 +34,24 @@ class NavLinkWithSub extends Component {
 					{ submenus && 
 						<ul className="submenu">
 							{ submenus.map((submenu) =>
-								<li className="navItem" key={submenu.id}>
-									<NavLink to={submenu.to} activeClassName="active" exact>{submenu.text}</NavLink>
-								</li>
+								<Sub to={submenu.to} key={submenu.id}>{submenu.text}</Sub>
 							)}
 						</ul> }
 				</li>
 			)
-		})
+		});
 		
+		return  (
+			<ul className={`navigation${ this.hasActiveSubmenu ? ' navigation--has-active-submenu' : '' }`}>{
+				content
+			}</ul>)
 	}
 }
-NavLinkWithSub.propTypes = {
+NavWithSub.propTypes = {
 	//user: PropTypes.object.isRequired
-	menu: PropTypes.array.isRequired
+	menu: PropTypes.array.isRequired,
+	match: ReactRouterPropTypes.match,
+	location: ReactRouterPropTypes.location
 };
 
-export default NavLinkWithSub;
+export default NavWithSub;

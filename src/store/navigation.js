@@ -2,13 +2,15 @@ import USER from '../constants/user';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
 const loggedInState = {
-	id: 'user', to: '/me/wishlist', text: 'You',
+	id: 'user', to: '/me/list', text: 'You',
 	submenu: [
-		{ to: '/me/wishlist', text: 'Wishlist'},
-		{ to: '/logout', text: 'Logout' }
+		{ id: 'mylist', to: '/me/list', text: 'All'},
+		{ id: 'mylist_movies', to: '/me/list/movies', text: 'Just Movies'},
+		{ id: 'mylist_series', to: '/me/list/series', text: 'Just Series'},
+		{ id: 'logout', to: '/logout', text: 'Logout' }
 	]
 };
-const loggedOutState = { id: 'user', to: '/login', text: 'Login' };
+const loggedOutState = { id: 'logout', to: '/login', text: 'Login' };
 
 export const INITIAL_STATE = [{ 
 	id: "movies", to: "/movies/onseed", text: "Movies",
@@ -43,7 +45,10 @@ const navigation = (state = INITIAL_STATE, action) => {
 			}
 			return {...menu, to: selected.to};
 		});
-	case USER.LOGIN:
+	/*case USER.LOGIN:
+		return state.map((menu) => (menu.id === 'user') ? loggedInState : menu);*/
+	case USER.VALIDATE_FULFILLED:
+	case USER.FETCH_FULFILLED:
 		return state.map((menu) => (menu.id === 'user') ? loggedInState : menu);
 	case USER.LOGOUT:
 		return state.map((menu) => (menu.id === 'user') ? loggedOutState : menu);

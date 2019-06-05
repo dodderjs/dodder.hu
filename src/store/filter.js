@@ -5,7 +5,7 @@ const filter = (TYPE) => (state = initialState, action) => {
 
 	switch (type) {
 	case `${TYPE}_SET_FILTER`:
-		return payload.filter;
+		return payload.filter || initialState;
 
 	default:
 		return state;

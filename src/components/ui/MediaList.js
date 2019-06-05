@@ -38,7 +38,7 @@ class MediaList extends Component {
 	scrollListener() {
 		const { onLoadMoreClick, totalCount, threshold, fetching } = this.props;
 
-		if (fetching || totalCount <= 0) return;
+		if (fetching || totalCount <= 0 || !this.node) return;
 
 		let windowScrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
 		let elTotalHeight = topPosition(this.node) + this.node.offsetHeight;
@@ -58,7 +58,7 @@ class MediaList extends Component {
 	hasMoreItems() {
 		const { items, totalCount } = this.props;
 
-		return totalCount !== items.length;
+		return totalCount && totalCount !== items.length;
 	}
 
 	renderLoadMore() {

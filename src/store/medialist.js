@@ -11,7 +11,6 @@ const medialist = (TYPE) => (state = INITIAL_STATE, action) => {
 			...state,
 			...payload.result
 		];
-
 	default:
 		return state;
 	}

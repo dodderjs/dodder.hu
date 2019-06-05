@@ -35,7 +35,8 @@ class MediaItem extends Component {
 				</figure>
 				<div className="movie-details">
 					<h4>{ media.title }</h4>
-					<p>Release: { media.id }</p>
+					<p>{ media.release_year }</p>
+					<p>{ media.imdb_rank }</p>
 				</div>
 			</Link>
 		</li>

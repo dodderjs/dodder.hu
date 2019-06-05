@@ -1,16 +1,16 @@
 import { normalize } from 'normalizr';
 import { API_ROOT } from '../config';
 import { CALL_API } from '../constants/api';
-import { getStoredData } from '../utils/storage';
 import pathToRegexp from 'path-to-regexp';
 
 const callApi = async (endpoint, schema, method = 'GET', headers = {}, body = null, params = {}, queries = {}) => {
-	let url = new URL(pathToRegexp.compile(`${API_ROOT}${endpoint}`)(params));
+	let url = new URL(`${API_ROOT}${pathToRegexp.compile(endpoint)(params)}`);
 	url.search = new URLSearchParams(queries);
 
 	const apiOptions = {
 		method: method,
 		mode: 'cors',
+		//credentials: 'same-origin',
 		headers: {
 			'Content-Type': 'application/json',
 			...headers
@@ -27,17 +27,20 @@ const callApi = async (endpoint, schema, method = 'GET', headers = {}, body = nu
 			if (!result) {
 				return {};
 			}
-			if (result.count && result.rows) {
+			if (!schema) {
+				return result;
+			}
+
+			if (result.count !== undefined && result.rows) {
 				const data = normalize(result.rows, schema);
 
 				return { ...data, count: result.count };
 			}
 			return normalize(result, schema);
 		} else {
-			throw new Error(`Fetching data wasn't successfull`);
+			throw new Error(response.statusText || `Fetching data wasn't successfull`);
 		}
 	} catch (error) {
-		//console.log(error);
 		throw error;
 	}
 };
@@ -49,15 +52,17 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
 		return next(action);
 	}
 
-	const state = getState();
-	const token = state.token || (state.user && state.user.token) || getStoredData('authToken');
-
-	if (token) {
-		headers.authorization = `Bearer ${token}`;
-	}
-
 	let { endpoint, method, headers, body, params, queries } = callAPI;
 	const { type, schema } = callAPI;
+
+	const state = getState();
+	const token = state.user && state.user.authToken;
+
+	if (token) {
+		headers = {
+			authorization: `Bearer ${token}`
+		}
+	}
 
 	if (typeof endpoint === 'function') {
 		endpoint = endpoint(state);
@@ -87,7 +92,7 @@ const apiMiddleware = ({ dispatch, getState }) => next => action => {
 		.catch(error => dispatch(actionWith({
 			type: type + '_REJECTED',
 			payload: {
-				error: error.message || 'Something bad happened'
+				error: error && error.message || 'Something bad happened'
 			}
 		})));
 };
