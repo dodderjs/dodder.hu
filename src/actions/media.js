@@ -22,6 +22,7 @@ const typeMap = {
 
 export const fetch = (type) => (dispatch, getState) => {
 	const {
+		user: { userId },
 		lists: {
 			[type]: {
 				filter,
@@ -35,7 +36,7 @@ export const fetch = (type) => (dispatch, getState) => {
 		type: `${typeMap[type].name}_FETCH`,
 		schema: Schemas.MEDIA_ARRAY,
 		endpoint: typeMap[type].endpoint,
-		params: filter === 'all' ? {} : { filter },
+		params: filter === 'all' ? { userId } : { userId, ...filter },
 		queries: { page, ...queries }
 	})(dispatch, getState);
 };

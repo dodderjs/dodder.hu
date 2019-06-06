@@ -11,6 +11,7 @@ const entities = (state = INITIAL_STATE, action) => {
 	case MEDIA.FETCH_FULFILLED:
 	case MEDIA.MOVIES_FETCH_FULFILLED:
 	case MEDIA.SERIES_FETCH_FULFILLED:
+	case MEDIA.MYLIST_FETCH_FULFILLED:
 		if (payload && payload.entities) {
 			return {
 				...state,
