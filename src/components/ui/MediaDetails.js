@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import Loader from './Loader';
-import { API_ROOT } from '../../config';
+import Poster from './Poster';
 
 class MediaDetails extends Component {
 	static propTypes = {
@@ -69,31 +69,6 @@ class MediaDetails extends Component {
 		return (<a className="details__buttons__wish button login" href="/login">Add to wishlist</a>);
 	}
 
-	static renderPoster(movieId, posterId) {
-		if (!posterId) {
-			return (<span className="material-icons md-60">&#xe02c;</span>);
-		} if (typeof posterId === 'string' && posterId.indexOf(':') > 0) {
-			const posterIds = posterId.split(':');
-
-			return (
-				<img
-					className="movie-poster"
-					src={`${API_ROOT}/posters/mm${posterIds[0]}/size_${posterIds[1]}_400.jpg`}
-					width="300"
-					alt="Poster"
-				/>
-			);
-		}
-		return (
-			<img
-				className="movie-poster"
-				src={`${API_ROOT}/posters/mm${movieId}/size_${posterId}_400.jpg`}
-				width="300"
-				alt="poster"
-			/>
-		);
-	}
-
 	render() {
 		const { media } = this.props;
 
@@ -130,7 +105,7 @@ class MediaDetails extends Component {
 					<div className={`details__images ${!posterId && 'no_poster'}`}>
 						<figure className="movie-posters">
 							<a href={`http://www.imdb.com/title/${imdbId}`} target="_blank" rel="noopener noreferrer">
-								{ MediaDetails.renderPoster(id, posterId) }
+								<Poster movieId={id} posterId={posterId} size="400" />
 							</a>
 						</figure>
 					</div>
