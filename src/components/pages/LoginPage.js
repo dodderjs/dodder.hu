@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect, withRouter } from 'react-router';
@@ -7,7 +7,7 @@ import { login } from '../../actions/user';
 import LoginForm from '../ui/LoginForm';
 import { API_ROOT, BASE_URL } from '../../config';
 
-class LoginPage extends PureComponent {
+class LoginPage extends Component {
 	render() {
 		const {
 			authenticated, loginUser, isLoading,

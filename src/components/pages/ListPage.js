@@ -57,6 +57,7 @@ export default class ListPage extends Component {
 
 	// eslint-disable-next-line class-methods-use-this
 	renderMedia(data, key) {
+		if (!data) return '';
 		return (
 			<MediaItem key={key} media={data} />
 		);

@@ -36,7 +36,7 @@ export const fetch = (type) => (dispatch, getState) => {
 		type: `${typeMap[type].name}_FETCH`,
 		schema: Schemas.MEDIA_ARRAY,
 		endpoint: typeMap[type].endpoint,
-		params: filter === 'all' ? { userId } : { userId, ...filter },
+		params: filter === 'all' ? { userId } : { userId, ...{ filter } },
 		queries: { page, ...queries }
 	})(dispatch, getState);
 };
@@ -88,5 +88,31 @@ export const loadById = (type = 'movies', id) => (dispatch, getState) => {
 			id,
 			type
 		}
+	})(dispatch, getState);
+};
+
+export const addWishlist = (movieId) => (dispatch, getState) => {
+	const {
+		user: { userId }
+	} = getState();
+
+	return apiDispatch({
+		type: MEDIA.MYLIST_ADD,
+		method: 'POST',
+		endpoint: ENDPOINTS.MYLIST_EDIT,
+		params: { movieId, userId }
+	})(dispatch, getState);
+};
+
+export const removeWishlist = (movieId) => (dispatch, getState) => {
+	const {
+		user: { userId }
+	} = getState();
+
+	return apiDispatch({
+		type: MEDIA.MYLIST_REMOVE,
+		method: 'DELETE',
+		endpoint: ENDPOINTS.MYLIST_EDIT,
+		params: { movieId, userId }
 	})(dispatch, getState);
 };

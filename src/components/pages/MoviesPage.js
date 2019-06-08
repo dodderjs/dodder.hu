@@ -10,10 +10,11 @@ const mapStateToProps = (state, ownProps) => {
 
 	const {
 		lists,
-		entities
+		entities: { media }
+
 	} = state;
 	const { pagination, list, isLoading } = lists[listtype];
-	const mediaList = list.map(elem => entities[elem.schema || listtype][elem.id || elem]);
+	const mediaList = list.map(elem => media[elem.id || elem]);
 
 	return {
 		queries,

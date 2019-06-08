@@ -12,13 +12,14 @@ class MediaDetails extends Component {
 		addWishlist: PropTypes.func.isRequired,
 		removeWishlist: PropTypes.func.isRequired,
 		media: PropTypes.shape({
-			title: PropTypes.string.isRequired
-		}).isRequired,
-		user: PropTypes.number
+			title: PropTypes.string
+		}),
+		user: PropTypes.string
 	}
 
 	static defaultProps = {
-		user: 0
+		user: '',
+		media: null
 	}
 
 	componentDidMount() {
@@ -68,13 +69,11 @@ class MediaDetails extends Component {
 		return (<a className="details__buttons__wish button login" href="/login">Add to wishlist</a>);
 	}
 
-	renderPoster() {
-		const { media } = this.props;
-
-		if (!media.poster_id) {
+	static renderPoster(movieId, posterId) {
+		if (!posterId) {
 			return (<span className="material-icons md-60">&#xe02c;</span>);
-		} if (typeof media.poster_id === 'string' && media.poster_id.indexOf(':') > 0) {
-			const posterIds = media.poster_id.split(':');
+		} if (typeof posterId === 'string' && posterId.indexOf(':') > 0) {
+			const posterIds = posterId.split(':');
 
 			return (
 				<img
@@ -88,7 +87,7 @@ class MediaDetails extends Component {
 		return (
 			<img
 				className="movie-poster"
-				src={`${API_ROOT}/posters/mm${media.id}/size_${media.posterIds}_400.jpg`}
+				src={`${API_ROOT}/posters/mm${movieId}/size_${posterId}_400.jpg`}
 				width="300"
 				alt="poster"
 			/>
@@ -96,13 +95,19 @@ class MediaDetails extends Component {
 	}
 
 	render() {
-		const {
-			media
-		} = this.props;
+		const { media } = this.props;
 
 		if (!media) {
 			return <Loader />;
 		}
+
+		const {
+			id, imdb_id: imdbId, title, pg, runtime, mainposter,
+			release_date: releaseDate, release_year: releaseYear, imdb_rank: imdbRank,
+			wish_added_at: wishAddedAt
+		} = media;
+
+		const posterId = mainposter ? mainposter.image_id : null;
 
 		return (
 			<div className="movie-details-view clear">
@@ -111,21 +116,21 @@ class MediaDetails extends Component {
 					<div className="details__title clear">
 						<h2>
 							<a
-								href={`http://www.imdb.com/title/${media.imdb_id}`}
+								href={`http://www.imdb.com/title/${imdbId}`}
 								target="_blank"
 								rel="noopener noreferrer"
 							>
-								{ media.title }
+								{ title }
 							</a>
 						</h2>
 
-						<span className="details__pg">{media.pg}</span>
-						<span className="details__runtime">{media.runtime}</span>
+						<span className="details__pg">{ pg }</span>
+						<span className="details__runtime">{ runtime }</span>
 					</div>
-					<div className={`details__images ${!media.poster_id && 'no_poster'}`}>
+					<div className={`details__images ${!posterId && 'no_poster'}`}>
 						<figure className="movie-posters">
-							<a href={`http://www.imdb.com/title/${media.imdb_id}`} target="_blank" rel="noopener noreferrer">
-								{this.renderPoster()}
+							<a href={`http://www.imdb.com/title/${imdbId}`} target="_blank" rel="noopener noreferrer">
+								{ MediaDetails.renderPoster(id, posterId) }
 							</a>
 						</figure>
 					</div>
@@ -134,30 +139,30 @@ class MediaDetails extends Component {
 						<ul className="spec">
 							<li>
 								<strong>Released date:</strong>
-								{new Date(media.release_date).toDateString()}
+								{ new Date(releaseDate).toDateString() }
 							</li>
 							<li>
 								<strong>Released year:</strong>
-								{media.release_year}
+								{ releaseYear }
 							</li>
 							<li>
 								<strong>Rank:</strong>
-								{media.imdb_rank}
+								{ imdbRank }
 							</li>
-							{media.wish_added_at && (
+							{ wishAddedAt && (
 								<li>
 									<strong>Added at:</strong>
 									{' '}
-									{media.wish_added_at}
+									{ wishAddedAt }
 								</li>
 							)}
 						</ul>
 					</div>
 					<div className="details__buttons">
-						{this.renderButtons()}
+						{ this.renderButtons() }
 					</div>
 				</div>
-				{this.renderBottom()}
+				{ this.renderBottom() }
 			</div>
 		);
 	}

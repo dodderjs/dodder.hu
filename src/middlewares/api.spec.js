@@ -57,14 +57,12 @@ describe('Api middleware tests', () => {
 			payload: {
 				count: 2,
 				entities: {
-					movies: {
+					media: {
 						1: {
 							id: 1,
 							name: 'test1',
 							type: 'movie',
-						}
-					},
-					series: {
+						},
 						2: {
 							id: 2,
 							name: 'test2',
@@ -72,14 +70,7 @@ describe('Api middleware tests', () => {
 						}
 					}
 				},
-				result: [{
-					id: 1,
-					schema: 'movies',
-				},
-				{
-					id: 2,
-					schema: 'series',
-				}]
+				result: [1, 2]
 			}
 		});
 	});
@@ -111,7 +102,7 @@ describe('Api middleware tests', () => {
 			type: MEDIA.FETCH_FULFILLED,
 			payload: {
 				entities: {
-					movies: {
+					media: {
 						1: {
 							id: 1,
 							name: 'test1',
@@ -119,10 +110,7 @@ describe('Api middleware tests', () => {
 						}
 					}
 				},
-				result: {
-					id: 1,
-					schema: 'movies',
-				}
+				result: 1
 			}
 		});
 	});

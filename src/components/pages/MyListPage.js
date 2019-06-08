@@ -3,20 +3,40 @@ import ListPage from './ListPage';
 import { nextPage, setFilter } from '../../actions/media';
 
 
-class MyListPage extends ListPage {}
+class MyListPage extends ListPage {
+	static filterToQuery(filter) {
+		let result = '';
+		switch (filter) {
+		case 'movies':
+			result = 'type eq movie';
+			break;
+		case 'all':
+			break;
+
+		default:
+			result = `type eq ${filter}`;
+			break;
+		}
+		return result;
+	}
+}
 
 const mapStateToProps = (state, ownProps) => {
 	const { filter = 'all', queries = {} } = ownProps.match.params;
 
 	const {
 		lists,
-		entities
+		entities: { media }
 	} = state;
 	const { pagination, list, isLoading } = lists.mylist;
-	const mediaList = list.map(elem => entities[elem.schema][elem.id || elem]);
+	const mediaList = list.map(elem => media[elem.id || elem]);
+	const filterQuery = MyListPage.filterToQuery(filter);
 
 	return {
-		queries,
+		queries: {
+			...queries,
+			filter: `${queries.filter || ''},${filterQuery}`
+		},
 		fetching: isLoading,
 		list: mediaList,
 		filter,

@@ -33,7 +33,7 @@ const callApi = async (endpoint, schema, method = 'GET', headers = {}, body = nu
 
 			if (result.count !== undefined && result.rows) {
 				const data = normalize(result.rows, schema);
-console.log(data)
+
 				return { ...data, count: result.count };
 			}
 			return normalize(result, schema);

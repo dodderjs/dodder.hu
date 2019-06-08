@@ -1,8 +1,7 @@
 import MEDIA from '../constants/media';
 
 export const INITIAL_STATE = {
-	movies: {},
-	series: {}
+	media: {}
 };
 const entities = (state = INITIAL_STATE, action) => {
 	const { type, payload } = action;
@@ -15,18 +14,35 @@ const entities = (state = INITIAL_STATE, action) => {
 		if (payload && payload.entities) {
 			return {
 				...state,
-				movies: {
-					...state.movies,
-					...payload.entities.movies || {}
-				},
-				series: {
-					...state.series,
-					...payload.entities.series || {}
+				media: {
+					...state.medias,
+					...payload.entities.media || {}
 				}
 			};
 		}
 		return state;
 
+	case MEDIA.MYLIST_ADD_FULFILLED:
+	case MEDIA.MYLIST_REMOVE_FULFILLED: {
+		const element = payload && payload.result;
+
+		if (element && state.media[element.movieId]) {
+			const id = element.movieId;
+			const changedMedia = {
+				...state.media[id],
+				wish_added_at: element.added_at || null,
+				user_notified_at: null
+			};
+			return {
+				...state,
+				media: {
+					...state.media,
+					[id]: changedMedia
+				}
+			};
+		}
+		return state;
+	}
 	default:
 		return state;
 	}

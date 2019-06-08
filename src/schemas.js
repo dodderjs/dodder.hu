@@ -4,7 +4,10 @@ import { schema } from 'normalizr';
 const userSchema = new schema.Entity('users', {
 	idAttribute: user => user.user.id
 });
-
+const mediaSchema = new schema.Entity('media', {
+	idAttribute: media => media.id
+});
+/*
 const movieSchema = new schema.Entity('movies', {
 	idAttribute: media => media.id
 });
@@ -38,10 +41,10 @@ const mediaSchema = new schema.Union({
 const Schemas = {
 	USER: userSchema,
 	USER_ARRAY: [userSchema],
-	MOVIE: movieSchema,
-	MOVIE_ARRAY: [movieSchema],
-	SERIES: seriesSchema,
-	SERIES_ARRAY: [seriesSchema],
+	MOVIE: mediaSchema,
+	MOVIE_ARRAY: [mediaSchema],
+	SERIES: mediaSchema,
+	SERIES_ARRAY: [mediaSchema],
 	MEDIA: mediaSchema,
 	MEDIA_ARRAY: [mediaSchema]
 };

@@ -12,8 +12,12 @@ describe('Loading Reducer', () => {
 	it('Fulfilled a media fetch', () => {
 		const payload = {
 			entities: {
-				movies: { 1: { id: 1, name: 'test1' }, 2: { id: 2, name: 'test2' } },
-				series: { 4: { id: 4, name: 'test4' }, 6: { id: 6, name: 'test6' } }
+				media: {
+					1: { id: 1, name: 'test1' },
+					2: { id: 2, name: 'test2' },
+					4: { id: 4, name: 'test4' },
+					6: { id: 6, name: 'test6' }
+				}
 			}
 		};
 		const action = {
