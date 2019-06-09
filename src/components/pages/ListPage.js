@@ -40,7 +40,9 @@ export default class ListPage extends Component {
 		const {
 			setFilter, filter, listtype, queries
 		} = this.props;
-		if (filter !== prevProps.filter || !isEqual(queries, prevProps.queries)) {
+		if (listtype !== prevProps.listtype
+			|| filter !== prevProps.filter
+			|| !isEqual(queries, prevProps.queries)) {
 			setFilter(listtype, filter, queries);
 		}
 	}

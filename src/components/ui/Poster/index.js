@@ -7,7 +7,7 @@ import { CDN_ROOT } from '../../../config';
 
 class Poster extends Component {
 	static propTypes = {
-		movieId: PropTypes.string.isRequired,
+		movieId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 		posterId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		size: PropTypes.number
 	}

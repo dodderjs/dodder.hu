@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import Loader from './Loader';
 import Poster from './Poster';
+import TorrentList from './TorrentList';
 
 class MediaDetails extends Component {
 	static propTypes = {
@@ -32,11 +33,6 @@ class MediaDetails extends Component {
 		if (id !== prevProps.id) {
 			loadMedia(type, id);
 		}
-	}
-
-	// eslint-disable-next-line class-methods-use-this
-	renderBottom() {
-		return null;
 	}
 
 	renderButtons() {
@@ -77,12 +73,10 @@ class MediaDetails extends Component {
 		}
 
 		const {
-			id, imdb_id: imdbId, title, pg, runtime, mainposter,
+			user, id, imdb_id: imdbId, title, pg, runtime, poster_id: posterId,
 			release_date: releaseDate, release_year: releaseYear, imdb_rank: imdbRank,
 			wish_added_at: wishAddedAt
 		} = media;
-
-		const posterId = mainposter ? mainposter.image_id : null;
 
 		return (
 			<div className="movie-details-view clear">
@@ -105,7 +99,7 @@ class MediaDetails extends Component {
 					<div className={`details__images ${!posterId && 'no_poster'}`}>
 						<figure className="movie-posters">
 							<a href={`http://www.imdb.com/title/${imdbId}`} target="_blank" rel="noopener noreferrer">
-								<Poster movieId={id} posterId={posterId} size="400" />
+								<Poster movieId={id} posterId={posterId} size={400} />
 							</a>
 						</figure>
 					</div>
@@ -137,7 +131,7 @@ class MediaDetails extends Component {
 						{ this.renderButtons() }
 					</div>
 				</div>
-				{ this.renderBottom() }
+				<TorrentList items={media.torrents} user={user} />
 			</div>
 		);
 	}

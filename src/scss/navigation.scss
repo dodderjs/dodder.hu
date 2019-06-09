@@ -19,6 +19,10 @@
 	
 	&.navigation--has-active-submenu {
 		height: 82px;
+
+		a.active + .submenu {
+			display: block;
+		}
 	}
 
 	.navItem,
@@ -75,9 +79,5 @@
 		background-color: $navigation-sub-bg;
 		left: 0;
 		right: 0;
-	}
-
-	a.active + .submenu {
-		display: block;
 	}
 }

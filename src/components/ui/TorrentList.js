@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 class TorrentList extends Component {
 	static propTypes = {
 		items: PropTypes.arrayOf(PropTypes.object),
-		user: PropTypes.number
+		user: PropTypes.string
 	}
 
 	static defaultProps = {
 		items: [],
-		user: 0
+		user: null
 	}
 
 	static convertSize(size) {

@@ -1,6 +1,8 @@
+@import './scss-variables/colors.scss';
+
 .button {
-	color: white;
-	background-color: #058CC5;
+	color: $button-text-default;
+	background-color: $button-bg-default;
 	padding: 5px 10px;
 	border-radius: 3px;
 	font-weight: normal;
@@ -19,6 +21,7 @@
 		}
 	}
 	&.remove {
+		background-color: $button-bg-danger;
 		.add-text {
 			display: none;
 		}
@@ -28,7 +31,7 @@
 	}
 
 	&.button-primary {
-		background-color: #2196f3;
+		background-color: $button-bg-default;
 	}
 	&.button-block {
 		display: block;
