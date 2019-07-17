@@ -15,7 +15,7 @@ const entities = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				media: {
-					...state.medias,
+					...state.media,
 					...payload.entities.media || {}
 				}
 			};
