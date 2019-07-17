@@ -42,6 +42,7 @@
 			padding-top: 145%;
 			overflow: hidden;
 			position: relative;
+			height: 0;
 		}
 		figure:after {
 			content: "";
@@ -198,7 +199,7 @@
 
 		.movie-details {
 			display: block;
-			padding: 2rem 1rem;
+			padding: 2rem .5rem;
 			margin: 0;
 			left: 0;
 			top: 0;
