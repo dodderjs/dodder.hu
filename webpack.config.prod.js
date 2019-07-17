@@ -6,6 +6,8 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
+const cssnano = require('cssnano');
+const autoprefixer = require('autoprefixer');
 
 const GLOBALS = {
 	'process.env.NODE_ENV': JSON.stringify('production'),
@@ -44,7 +46,7 @@ module.exports = {
 		// Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
 		new HtmlWebpackPlugin({
 			template: 'src/index.ejs',
-			//	favicon: 'src/favicon.ico',
+			// favicon: 'src/favicon.ico',
 			minify: {
 				removeComments: true,
 				collapseWhitespace: true,
@@ -77,7 +79,6 @@ module.exports = {
 				},
 			],
 		}),
-  
 	],
 	module: {
 		rules: [
@@ -160,8 +161,8 @@ module.exports = {
 						loader: 'postcss-loader',
 						options: {
 							plugins: () => [
-								require('cssnano'),
-								require('autoprefixer'),
+								cssnano,
+								autoprefixer,
 							],
 							sourceMap: true
 						}

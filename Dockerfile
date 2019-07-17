@@ -6,17 +6,23 @@ ENV WWW=/usr/src/app
 RUN mkdir -p $WWW
 
 # Change directory so that our commands run inside this new directory
-ADD . $WWW
+#ADD . $WWW
 WORKDIR $WWW
 
-# Install dependecies
-RUN npm install
-#ENV NODE_PATH=/usr/src/api/node_modules
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-ENV PORT 8800
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+ENV PORT 3000
 EXPOSE $PORT
 
-RUN CMD npm rebuild node-sass
+#RUN CMD npm rebuild node-sass
 
 # Serve the app
 CMD ["npm", "start"]

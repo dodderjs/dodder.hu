@@ -27,14 +27,14 @@ module.exports = {
 	devServer: {
 		inline: true,
 		contentBase: './dist',
-		port: 3000,
+		port: process.env.PORT || 3000,
 		hot: true,
 		historyApiFallback: true
 	},
-	serve: {
+	/* serve: {
 		port: 3300,
 		content: './dist',
-	},
+	}, */
 	module: {
 		rules: [{
 			test: /\.jsx?$/,
