@@ -9,11 +9,24 @@ class MediaDetails extends Component {
 	static propTypes = {
 		id: PropTypes.number.isRequired,
 		type: PropTypes.string.isRequired,
+		isLoading: PropTypes.bool.isRequired,
 		loadMedia: PropTypes.func.isRequired,
 		addWishlist: PropTypes.func.isRequired,
 		removeWishlist: PropTypes.func.isRequired,
 		media: PropTypes.shape({
-			title: PropTypes.string
+			id: PropTypes.number,
+			title: PropTypes.string,
+			user: PropTypes.string,
+			imdb_id: PropTypes.string,
+			pg: PropTypes.string,
+			runtime: PropTypes.number,
+			poster_id: PropTypes.string,
+			release_date: PropTypes.string,
+			release_year: PropTypes.number,
+			wish_added_at: PropTypes.string,
+			plot: PropTypes.string,
+			imdb_rank: PropTypes.number,
+			torrents: PropTypes.arrayOf(PropTypes.object)
 		}),
 		user: PropTypes.string
 	}
@@ -24,12 +37,16 @@ class MediaDetails extends Component {
 	}
 
 	componentDidMount() {
-		const { type, id, loadMedia } = this.props;
+		const { id, type, loadMedia } = this.props;
+
+		if (!id) return;
 		loadMedia(type, id);
 	}
 
 	componentDidUpdate(prevProps) {
-		const { type, id, loadMedia } = this.props;
+		const { id, type, loadMedia } = this.props;
+
+		if (!id) return;
 		if (id !== prevProps.id) {
 			loadMedia(type, id);
 		}
@@ -66,10 +83,14 @@ class MediaDetails extends Component {
 	}
 
 	render() {
-		const { media } = this.props;
+		const { isLoading, media } = this.props;
+
+		if (isLoading) {
+			return <Loader />;
+		}
 
 		if (!media) {
-			return <Loader />;
+			return 'There is nothing';
 		}
 
 		const {

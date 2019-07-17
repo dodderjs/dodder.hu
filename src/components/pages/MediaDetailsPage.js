@@ -8,11 +8,13 @@ const mapStateToProps = (state, ownProps) => {
 	const { id, type } = ownProps.match.params;
 
 	const {
+		selected: { isLoading },
 		entities: { media },
 		user: { userId }
 	} = state;
 
 	return {
+		isLoading,
 		id: Number.parseInt(id, 10),
 		type,
 		media: media[id],
@@ -21,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-	loadMedia: (type, id) => loadById(type, id),
+	loadMedia: loadById,
 	addWishlist,
 	removeWishlist
 };

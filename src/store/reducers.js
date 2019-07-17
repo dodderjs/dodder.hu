@@ -10,12 +10,14 @@ import paginate from './paginate';
 import loading from './loading';
 import filter from './filter';
 import queries from './queries';
+import selected from './selected';
 
 export default (history) => combineReducers({
 	errors,
 	entities,
 	user,
 	navigation,
+	selected,
 	lists: combineReducers({
 		movies: combineReducers({
 			isLoading: loading(MEDIA.MOVIES),
