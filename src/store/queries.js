@@ -1,11 +1,11 @@
-export const initialState = {};
+export const INITIAL_STATE = {};
 
-const queries = (TYPE) => (state = initialState, action) => {
+const queries = (TYPE) => (state = INITIAL_STATE, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
 	case `${TYPE}_SET_FILTER`:
-		return payload.queries || initialState;
+		return payload.queries || INITIAL_STATE;
 	default:
 		return state;
 	}

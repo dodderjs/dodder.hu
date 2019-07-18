@@ -1,12 +1,12 @@
 import MEDIA from '../constants/media';
 
-export const initialState = {
+export const INITIAL_STATE = {
 	id: null,
 	type: null,
 	isLoading: false
 };
 
-const selected = (state = initialState, action) => {
+const selected = (state = INITIAL_STATE, action) => {
 	const { type, payload } = action;
 
 	switch (type) {

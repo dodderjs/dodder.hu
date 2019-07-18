@@ -1,11 +1,11 @@
-export const initialState = 'all';
+export const INITIAL_STATE = 'all';
 
-const filter = (TYPE) => (state = initialState, action) => {
+const filter = (TYPE) => (state = INITIAL_STATE, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
 	case `${TYPE}_SET_FILTER`:
-		return payload.filter || initialState;
+		return payload.filter || INITIAL_STATE;
 
 	default:
 		return state;
