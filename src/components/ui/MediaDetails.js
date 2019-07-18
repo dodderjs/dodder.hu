@@ -20,7 +20,7 @@ class MediaDetails extends Component {
 			imdb_id: PropTypes.string,
 			pg: PropTypes.string,
 			runtime: PropTypes.number,
-			poster_id: PropTypes.string,
+			poster_id: PropTypes.number,
 			release_date: PropTypes.string,
 			release_year: PropTypes.number,
 			wish_added_at: PropTypes.string,
