@@ -19,7 +19,10 @@ module.exports = {
 		extensions: ['*', '.js', '.jsx', '.json']
 	},
 	devtool: 'source-map',
-	entry: path.resolve(__dirname, 'src'),
+	entry: [
+		'@babel/polyfill',
+		path.resolve(__dirname, 'src')
+	],
 	target: 'web',
 	mode: 'production',
 	output: {
@@ -31,60 +34,11 @@ module.exports = {
 		port: 3300,
 		content: './dist',
 	},
-	plugins: [
-		// Hash the files using MD5 so that their names change when the content changes.
-		new WebpackMd5Hash(),
-
-		// Tells React to build in prod mode. https://facebook.github.io/react/downloads.html
-		new webpack.DefinePlugin(GLOBALS),
-
-		// Generate an external css file with a hash in the filename
-		new MiniCssExtractPlugin({
-			filename: '[name].[contenthash].css'
-		}),
-
-		// Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
-		new HtmlWebpackPlugin({
-			template: 'src/index.ejs',
-			// favicon: 'src/favicon.ico',
-			minify: {
-				removeComments: true,
-				collapseWhitespace: true,
-				removeRedundantAttributes: true,
-				useShortDoctype: true,
-				removeEmptyAttributes: true,
-				removeStyleLinkTypeAttributes: true,
-				keepClosingSlash: true,
-				minifyJS: true,
-				minifyCSS: true,
-				minifyURLs: true
-			},
-			inject: true
-		}),
-		new WebpackPwaManifest({
-			name: 'Redux React Movies',
-			short_name: 'Movies',
-			description: 'My awesome Progressive Movie Web App!',
-			background_color: '#5f241e',
-			theme_color: '#5f241e',
-			crossorigin: 'use-credentials', // can be null, use-credentials or anonymous
-			ios: {
-				'apple-mobile-web-app-title': 'RRMovies',
-				'apple-mobile-web-app-status-bar-style': 'black',
-			},
-			icons: [
-				{
-					src: path.resolve('src/img/icons/icon.png'),
-					sizes: [72, 96, 128, 192, 256, 384, 512],
-				},
-			],
-		}),
-	],
 	module: {
 		rules: [
 			{
 				test: /\.jsx?$/,
-				exclude: /node_modules/,
+				exclude: /(node_modules)/,
 				use: ['babel-loader']
 			},
 			{
@@ -176,5 +130,55 @@ module.exports = {
 				]
 			}
 		]
-	}
+	},
+
+	plugins: [
+		// Hash the files using MD5 so that their names change when the content changes.
+		new WebpackMd5Hash(),
+
+		// Tells React to build in prod mode. https://facebook.github.io/react/downloads.html
+		new webpack.DefinePlugin(GLOBALS),
+
+		// Generate an external css file with a hash in the filename
+		new MiniCssExtractPlugin({
+			filename: '[name].[contenthash].css'
+		}),
+
+		// Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
+		new HtmlWebpackPlugin({
+			template: 'src/index.ejs',
+			// favicon: 'src/favicon.ico',
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				removeRedundantAttributes: true,
+				useShortDoctype: true,
+				removeEmptyAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				keepClosingSlash: true,
+				minifyJS: true,
+				minifyCSS: true,
+				minifyURLs: true
+			},
+			inject: true
+		}),
+		new WebpackPwaManifest({
+			name: 'Redux React Movies',
+			short_name: 'Movies',
+			description: 'My awesome Progressive Movie Web App!',
+			background_color: '#5f241e',
+			theme_color: '#5f241e',
+			crossorigin: 'use-credentials', // can be null, use-credentials or anonymous
+			ios: {
+				'apple-mobile-web-app-title': 'RRMovies',
+				'apple-mobile-web-app-status-bar-style': 'black',
+			},
+			icons: [
+				{
+					src: path.resolve('src/img/icons/icon.png'),
+					sizes: [72, 96, 128, 192, 256, 384, 512],
+				},
+			],
+		}),
+	]
 };
