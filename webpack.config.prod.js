@@ -30,10 +30,10 @@ module.exports = {
 		publicPath: '/',
 		filename: '[name].[chunkhash].js'
 	},
-	serve: {
+	/* serve: {
 		port: 3300,
 		content: './dist',
-	},
+	}, */
 	module: {
 		rules: [
 			{
