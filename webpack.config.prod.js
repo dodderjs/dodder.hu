@@ -18,7 +18,7 @@ module.exports = {
 	resolve: {
 		extensions: ['*', '.js', '.jsx', '.json']
 	},
-	devtool: 'source-map',
+	// devtool: 'source-map',
 	entry: [
 		'@babel/polyfill',
 		path.resolve(__dirname, 'src')
