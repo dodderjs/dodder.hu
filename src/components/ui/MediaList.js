@@ -21,6 +21,7 @@ class MediaList extends Component {
 
 	constructor(props) {
 		super(props);
+		this.scrollableNode = React.createRef();
 		this.scrollFunction = this.scrollListener.bind(this);
 	}
 
@@ -50,12 +51,12 @@ class MediaList extends Component {
 			onLoadMoreClick, totalCount, threshold, fetching
 		} = this.props;
 
-		if (fetching || totalCount <= 0 || !this.node) return;
+		if (fetching || totalCount <= 0 || !this.scrollableNode.current) return;
 
 		const windowScrollTop = (window.pageYOffset !== undefined)
 			? window.pageYOffset
 			: (document.documentElement || document.body.parentNode || document.body).scrollTop;
-		const elTotalHeight = topPosition(this.node) + this.node.offsetHeight;
+		const elTotalHeight = topPosition(this.scrollableNode.current) + this.scrollableNode.current.offsetHeight;
 		const currentBottomPosition = elTotalHeight - windowScrollTop - window.innerHeight;
 
 		if (currentBottomPosition < Number(threshold)) {
@@ -98,7 +99,8 @@ class MediaList extends Component {
 			return <div><i>Nothing here!</i></div>;
 		}
 		return (
-			<div>
+			// eslint-disable-next-line no-return-assign
+			<div ref={this.scrollableNode}>
 				<ul className="movie-list clear">
 					{ items.map(renderItem)}
 				</ul>
