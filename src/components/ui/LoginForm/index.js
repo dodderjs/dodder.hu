@@ -31,7 +31,7 @@ class LoginForm extends Component {
 			password
 		} = this.state;
 
-		const { isLoading, facebookUrl, googleUrl } = this.props;
+		const { isLoading, loginSocial } = this.props;
 
 		return isLoading ? <Loader /> : (
 			<div>
@@ -63,7 +63,7 @@ class LoginForm extends Component {
 						<span>Log in</span>
 					</button>
 				</form>
-				<LoginSocial googleUrl={googleUrl} facebookUrl={facebookUrl} />
+				<LoginSocial loginSocial={loginSocial} />
 			</div>
 		);
 	}
@@ -72,14 +72,11 @@ class LoginForm extends Component {
 LoginForm.propTypes = {
 	loginUser: PropTypes.func.isRequired,
 	isLoading: PropTypes.bool,
-	facebookUrl: PropTypes.string,
-	googleUrl: PropTypes.string,
+	loginSocial: PropTypes.func.isRequired
 };
 
 LoginForm.defaultProps = {
-	isLoading: false,
-	facebookUrl: '',
-	googleUrl: '',
+	isLoading: false
 };
 
 export default LoginForm;

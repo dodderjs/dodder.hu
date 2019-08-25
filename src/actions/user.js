@@ -9,7 +9,7 @@ export const fetchUser = apiDispatch({
 	endpoint: '/user/:id'
 });
 
-export function logoutUser() {
+export function logout() {
 	return {
 		type: USER.LOGOUT
 	};
@@ -30,6 +30,24 @@ export const login = (email, password) => (dispatch, getState) => {
 		}
 	})(dispatch, getState);
 };
+
+export const loginSocial = (type, code) => (dispatch, getState) => {
+	dispatch({
+		type: USER.LOGIN_SOCIAL,
+		payload: type
+	});
+
+	return apiDispatch({
+		type: USER.FETCH,
+		method: 'POST',
+		endpoint: ENDPOINTS.USER_VALIDATE,
+		body: {
+			code,
+			type
+		}
+	})(dispatch, getState);
+};
+
 export const meFromToken = (token) => (dispatch, getState) => apiDispatch({
 	type: USER.VALIDATE,
 	method: 'POST',
