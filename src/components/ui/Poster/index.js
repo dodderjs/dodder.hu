@@ -23,22 +23,11 @@ class Poster extends Component {
 		if (!posterId) {
 			return <MdLaunch />;
 			// return (<span className="material-icons md-60">&#xe02c;</span>);
-		} if (typeof posterId === 'string' && posterId.indexOf(':') > 0) {
-			const posterIds = posterId.split(':');
-
-			return (
-				<img
-					className="movie-poster"
-					src={`${CDN_ROOT}/posters/mm${posterIds[0]}/size_${posterIds[1]}_${size}.jpg`}
-					width={size}
-					alt="Poster"
-				/>
-			);
 		}
 		return (
 			<img
 				className="movie-poster"
-				src={`${CDN_ROOT}/posters/mm${movieId}/size_${posterId}_200.jpg`}
+				src={`${CDN_ROOT}/posters/mm${movieId}/size_${posterId}_${size || 200}.jpg`}
 				width="150"
 				alt="poster"
 			/>

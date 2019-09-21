@@ -20,7 +20,9 @@ class MediaDetails extends Component {
 			imdb_id: PropTypes.string,
 			pg: PropTypes.string,
 			runtime: PropTypes.number,
-			poster_id: PropTypes.number,
+			mainposter: PropTypes.shape({
+				image_id: PropTypes.number
+			}),
 			release_date: PropTypes.string,
 			release_year: PropTypes.number,
 			wish_added_at: PropTypes.string,
@@ -94,7 +96,7 @@ class MediaDetails extends Component {
 		}
 
 		const {
-			user, id, imdb_id: imdbId, title, pg, runtime, poster_id: posterId,
+			user, id, imdb_id: imdbId, title, pg, runtime, mainposter,
 			release_date: releaseDate, release_year: releaseYear, imdb_rank: imdbRank,
 			wish_added_at: wishAddedAt
 		} = media;
@@ -117,10 +119,10 @@ class MediaDetails extends Component {
 						<span className="details__pg">{ pg }</span>
 						<span className="details__runtime">{ runtime }</span>
 					</div>
-					<div className={`details__images ${!posterId && 'no_poster'}`}>
+					<div className={`details__images ${!mainposter && 'no_poster'}`}>
 						<figure className="movie-posters">
 							<a href={`http://www.imdb.com/title/${imdbId}`} target="_blank" rel="noopener noreferrer">
-								<Poster movieId={id} posterId={posterId} size={400} />
+								<Poster movieId={id} posterId={mainposter && mainposter.image_id} size={400} />
 							</a>
 						</figure>
 					</div>

@@ -3,11 +3,19 @@ import pathToRegexp from 'path-to-regexp';
 import { API_ROOT } from '../config';
 import { CALL_API } from '../constants/api';
 
+let controller;
+
 const callApi = async (endpoint, schema, method = 'GET', headers = {}, body = null, params = {}, queries = {}) => {
 	const url = new URL(`${API_ROOT}${pathToRegexp.compile(endpoint)(params)}`);
 	url.search = new URLSearchParams(queries);
 
+	if (controller && controller.abort) {
+		controller.abort();
+	}
+	controller = new AbortController();
+
 	const apiOptions = {
+		signal: controller.signal,
 		method,
 		mode: 'cors',
 		// credentials: 'same-origin',

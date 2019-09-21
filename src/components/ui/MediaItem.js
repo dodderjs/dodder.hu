@@ -20,10 +20,10 @@ class MediaItem extends Component {
 					to={`/${media.type === 'series'
 						? media.type
 						: `${media.type}s`}/details/${media.id}`}
-					className={`movie ${!media.poster_id && 'no_poster'}`}
+					className={`movie ${!media.mainposter && 'no_poster'}`}
 				>
 					<figure>
-						<Poster movieId={media.id} posterId={media.poster_id} />
+						<Poster movieId={media.id} posterId={media.mainposter && media.mainposter.image_id} />
 						<div className="movie__fullscreen">
 							<MdOpenInNew className="material_icons md-60" />
 						</div>
